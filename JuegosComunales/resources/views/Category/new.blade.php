@@ -43,28 +43,32 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
              placeholder="Ej. Sub-17" value="{{ old('category') }}" required autofocus>
     </div>
     
+    <label for="" class="col-lg-4 control-label">Edad mínima:</label>
+   
+         <div class="col-lg-6">
+             <div class="col-lg-4">
+                <input type="number" class="form-control" name="startAge" id="startAge" placeholder="Ej. 14" pattern="[0-9]{2}" title="Solo se permíten números"  required autofocus>
+            </div>
+             <div class="col-lg-2">
+                 <label for="" class="control-label">Años</label>
+                 </div>
+            </div>
+        
+        <label for="" class="col-md-4 control-label">Edad máxima:</label>
+
+        <div class="col-lg-6">
+            <div class="col-lg-4">
+                <input type="number" class="form-control" name="endAge" id="endAge" placeholder="Ej. 17" pattern="[0-9]{2}" title="Solo se permíten números"  required autofocus>
+            </div>
+            <div class="col-lg-2">
+                <label for="" class="control-label">Años</label>
+                </div>
+            </div>
+            
     
 
-    <label for="" class="col-lg-4 control-label">Límite inicial de fecha de nacimiento:</label>
-    <div class="col-lg-6">
-        <div class='input-group date' id='startDate'>
-            <input pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" title="La fecha debe ser año-mes-dia" placeholder = "Seleccione una fecha" name = "startDate" type='text' class="form-control" id='datepicker' autocomplete='off' onchange="changeEventHandler(event);" required autofocus/>
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-        </div>
-        </div>
-        
-        
-        <label for="" class="col-md-4 control-label">Fecha límite de fecha de nacimiento:</label>
-    <div class="col-lg-6">
-        <div class='input-group date' id='endDate'>
-            <input pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" title="La fecha debe ser año-mes-dia" placeholder = "Seleccione una fecha" name = "endDate" type='text' class="form-control" id='datepicker2' autocomplete='off' onchange="changeEventHandler(event);" required autofocus/>
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-        </div>
-        </div>
+    
+       
         <div class="col-lg-offset-8 col-lg-4">
       <a href="{{URL::to('category/')}}"><button type="button" class="btn btn-info"><span class="glyphicon"> </span><span>Cancelar</span></button></a>
       <button type="submit" class="btn btn-info"><span class="glyphicon"> </span><span>Aceptar</span></button>

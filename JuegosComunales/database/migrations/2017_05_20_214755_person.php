@@ -22,6 +22,7 @@ class Person extends Migration
             $table->string('email',30) ->nullable();
             $table->char('gender', 1);
             $table->date('birthDate');
+            $table->string('address',255);
             $table->integer('IDCommunity')->unsigned();
             $table->foreign('IDCommunity')->references('IDCommunity')->on('community');
             $table->integer('IDRole')->unsigned();

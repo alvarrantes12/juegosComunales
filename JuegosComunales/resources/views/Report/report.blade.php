@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Reporte</title>
+	<title>Reporte <?=  $date; ?></title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <style>
  
  .col-md-12 {
@@ -17,7 +19,7 @@
     margin-bottom: 20px;
     width: 100%;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-    background-color: #ECF0F5;
+    background-color: #fff;
 }
 
 .box-header {
@@ -34,6 +36,7 @@
 
 .box-header .box-title {
     display: inline-block;
+    text-align:center;
     font-size: 18px;
     margin: 0;
     line-height: 1;
@@ -47,7 +50,10 @@
     padding: 10px;
 
 }
-
+.encabezado{
+    margin-left:500px;
+    
+}
 
 .box-footer {
     border-top-left-radius: 0;
@@ -72,13 +78,16 @@
 }
 
 table {
-    background-color: transparent;
+    background-color: #fff;
 }
 
  .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
     border: 1px solid #f4f4f4;
 }
 
+.h{
+    background-color: #fff;
+}
 
 .badge {
     display: inline-block;
@@ -98,7 +107,12 @@ table {
 .bg-red {
     background-color: #dd4b39 !important;
 }
-
+tr:nth-child(odd) {
+  background-color:#f2f2f2;
+}
+tr:nth-child(even) {
+  background-color:#fbfbfb;
+}
 
 </style>
 	  
@@ -107,21 +121,51 @@ table {
 
 <div class="col-md-12">
               <div class="box">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Reporte por categoría- <?=  $date; ?></h3>
+                  <table class="table  text-right">
+                      <tr class="h">
+                          <td></td>
+                          <td><h1 align="center">Comité Cantonal de Deportes y Recreación de Grecia</h1></td>
+                          <td><img src="dist/img/LogoComite.png"></img></td>
+                      </tr>
+                  </table>
+                
+                   
+                     
+                  <h3  align="center">Reporte por categoría </h3>
+                  <table class="table  text-left">
+                 <td>
+                <br>
+                   <h3  class="box-title">Fecha: <?=  $date; ?></h3>
+                   <br>
+                   </td>
+                   <td>
+                   <br>
+                  <h3  class="box-title">Deporte: <?=  $sport; ?></h3>
+                   <br>
+                   </td>
+                    <td>
+                   <br>
+                  <h3  class="box-title">Categoría: <?=  $category1; ?></h3>
+                   <br>
+                   </td>
+                    <td>
+                     <br>
+                  <h3  class="box-title">Comunidad: <?=  $community1; ?></h3>
+                   <br>
+                   </td>
+                    
+                  
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table class="table table-hover table-striped text-left">
                   <thead>
                      <tr>
-                      <th style="width: 60px">Cédula</th>
+                      <th >Identificación</th>
                       <th>Nombre</th>
-                       <th>Apellido</th>
-                        <th>Apellido</th>
+                       <th>1er Apellido</th>
+                        <th>2do Apellido</th>
                          <th>Rama</th>
-                          <th>Comunidad</th>
-                           <th>Deporte</th>
-                            <th>categoria</th>
+                        
                       
                      </tr>
                   </thead>
@@ -129,17 +173,22 @@ table {
                   <?php foreach($data as $c){ ?>
                  
                     <tr>
-                      <td style="width: 10px" ><?= $c->IDCategory; ?></td>
+                      <!--<td style="width: 10px" ><?= $c->IDCategory; ?></td>-->
                       <td><?= $c->IDPerson; ?></td>
                       <td><?= $c->name; ?></td>
                       <td><?= $c->lastName1; ?></td>
                       <td><?= $c->lastName2; ?></td>
-                      <td><?= $c->category; ?></td>
+                      <?php if( $c->gender == 'F'){?>
+                       <td>Femenino</td>
+                        <?php  } else { ?>
+                        <td>Masculino</td>
+                         <?php  } ?>
+                    
                       
                     </tr>
                     
                     <?php  } ?>
-                    
+                   
                   </tbody>
 
                   </table>
@@ -151,10 +200,31 @@ table {
 
               
             </div>
-
+<script type="text/php">
+        if ( isset($pdf) ) {
+            // OLD 
+            // $font = Font_Metrics::get_font("helvetica", "bold");
+            // $pdf->page_text(72, 18, "{PAGE_NUM} of {PAGE_COUNT}", $font, 6, array(255,0,0));
+            // v.0.7.0 and greater
+            $x = 265;
+            $y = 750;
+            $text = "{PAGE_NUM} de {PAGE_COUNT}";
+            $font = $fontMetrics->get_font("helvetica", "normal");
+            $size = 14;
+            $color = array(0,0,0);
+            $word_space = 0.0;  //  default
+            $char_space = 0.0;  //  default
+            $angle = 0.0;   //  default
+            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+        }
+    </script>
 
 	
 </body>
+
+
+
+                    
 </html>
 
 

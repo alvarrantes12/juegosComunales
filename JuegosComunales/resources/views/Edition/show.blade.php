@@ -15,8 +15,17 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 @extends('adminMasterPage')
 @section('adminContent')
 
-
+<section>
+      <div class="row">
 <div class="col-md-12 col-md-offset-0 text-center">
+    
+    @if (Session::has('edition'))
+             <div align = "center">
+             <div class="alert alert-success">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('edition')}}</div></div>
+            @endif
+    
             <div class="panel panel-success">
                <div class="panel-heading">
                  <h4 style="color: #899B82;">Ediciones Registradas</h4>
@@ -64,6 +73,9 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                 <th></th>
                 <th></th>
            </thead>
+            @if(count($edition) < 1)
+                <td>No existen coincidencias para su búsqueda</td>
+               @endif
            @foreach ($edition as $e)
                 <tr>
                   <td>{{$e->nameEdition}}</td>
@@ -94,4 +106,6 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         
     </div>
 </div>
+</div>
+</section>
 @endsection

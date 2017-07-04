@@ -14,8 +14,16 @@ Vista que se encarga de crear un formulario con el fin de seleccionar el deporte
 específicos con el fin de recolectar parte de los datos de la inscripción de los participantes en el sistema-->
 @extends('adminMasterPage')
 @section('adminContent')
-
+<section>
+      <div class="row">
 <div class="col-md-12 col-md-offset-0 text-center">
+    @if (Session::has('test'))
+             <div align = "center">
+             <div class="alert alert-success">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('test')}}</div></div>
+            @endif
+
             <div class="panel panel-success">
                <div class="panel-heading">
                  <h4 style="color: #899B82;">Pruebas Registradas</h4>
@@ -62,6 +70,9 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                 <th></th>
                 <th></th>
            </thead>
+            @if(count($test) < 1)
+                <td>No existen coincidencias para su búsqueda</td>
+               @endif
             @foreach ($test as $t)
                 <tr>
                   <td>{{$t->nameTest}}</td>
@@ -92,4 +103,6 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
               </div>
     </div>
 </div>
+</div>
+</section>
 @endsection

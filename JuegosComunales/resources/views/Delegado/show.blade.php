@@ -13,18 +13,21 @@ Clase: users
 Vista que se encarga de crear un formulario con el fin de mostrar los atletas inscritos-->
 @extends('adminMasterPage')
 @section('adminContent')
-<section>
-      <div class="row">
+
 <div class="col-md-12 col-md-offset-0 text-center">
-             @if (Session::has('athlete'))
+    
+    @if (Session::has('delegate'))
              <div align = "center">
              <div class="alert alert-success">
              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-             {{Session::get('athlete')}}</div></div>
+             {{Session::get('delegate')}}</div></div>
             @endif
+            
+            
             <div class="panel panel-success">
+               
                <div class="panel-heading">
-                  <h4 style="color: #899B82;">Atletas Registados</h4>
+                  <h4 style="color: #899B82;">Delegados Registados</h4>
                </div>
                <div class="panel-body">
                   
@@ -32,10 +35,10 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
    <div class="table-responsive">
       <table  class="table table-hover table-striped">
          <td aling="center">
-            <form class="form-horizontal" role="form" method="POST" action="{{url('searchPerson/')}}">
+            <form class="form-horizontal" role="form" method="POST" action="{{url('searchDelegado/')}}">
                {{ csrf_field() }}
                <div class="col-md-9">
-                  <input id="filter" placeholder='Digite la cedula del atleta, el nombre o apellido' type="text" class="form-control" name="filter" value="{{ old('filter') }}" required autofocus>
+                  <input id="filter" placeholder='Digite la cedula del delegado, el nombre o apellido' type="text" class="form-control" name="filter" value="{{ old('filter') }}" required autofocus>
                   @if ($errors->has('filter'))
                   <span class="help-block">
                   <strong>{{$errors->first('filter')}}</strong>
@@ -62,13 +65,14 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
       <table class="table table-hover table-striped text-center">
          <thead>
             <th>Numero de identificación</th>
-            <th>Nombre del atleta</th>
+            <th>Nombre del delegado</th>
             <th>Primer Apellido</th>
             <th>Segundo Apellido</th>
             <th>Fecha de nacimiento</th>
+            <th>Correo electrónico</th>
+            <th>Teléfono</th>
             <th>Comunidad</th>
-            <th>Deporte</th>
-            <th>Categoria</th>
+            
            
          <th></th>
             <th></th>
@@ -85,18 +89,19 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
             <td>{{$p->lastName2}}</td>
             <td>{{$p->birthDate}}</td>
             
+            <td>{{$p->email}}</td>
+               <td>{{$p->telephone}}</td>
              <td>{{$p->nameCommunity}}</td>
-              <td>{{$p->nameSport}}</td>
-               <td>{{$p->nameCategory}}</td>
+              
                
         <td>
-               <a href="{{URL::to('editAthlete/' . $p->IDPerson)}}">
+               <a href="{{URL::to('editDelAdmin/' . $p->IDPerson)}}">
                   <i class="fa fa-pencil-square-o"></i> <span>Editar</span>
                  
              </a>
             </td>
             <td>
-                   <a href="{{URL::to('deleteAthlete/'.$p->IDPerson)}}">
+                   <a href="{{URL::to('deleteDel/'.$p->IDPerson)}}">
                        <i class="fa fa-trash-o"></i><span> Eliminar</span>
                    </a>
                </td>
@@ -108,6 +113,4 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
 </div>
 </div>
 </div>
-</div>
-</section>
 @endsection

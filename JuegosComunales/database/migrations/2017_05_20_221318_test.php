@@ -15,7 +15,8 @@ class Test extends Migration
     {
        Schema::create('test', function (Blueprint $table) {
             $table->increments('IDTest');
-            $table->string('nameTest',100);
+            $table->string('nameTest',50);
+            $table->boolean('active');
             $table->timestamps();
         });
     }

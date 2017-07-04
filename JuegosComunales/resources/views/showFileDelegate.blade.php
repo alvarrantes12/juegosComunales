@@ -1,6 +1,6 @@
-@extends('adminMasterPage')
+@extends('masterPage')
 
-@section('adminContent')
+@section('content')
 <section>
       <div class="row">
   <div class="col-md-10 col-md-offset-1 text-center">
@@ -10,7 +10,7 @@
                </div>
                <div class="panel-body">
   
-   <form method="GET" action="{{url ('excelData/')}}">
+   <form method="GET" action="{{url ('excelDataRead/')}}">
             
            {{ csrf_field() }}
             
@@ -19,7 +19,7 @@
     <div class="table-responsive">
         <table class="table table-hover table-striped text-left">
             <thead>
-                <th>Numero de identificacion</th>
+                <th>Numero de identificación</th>
             <th>Nombre del atleta</th>
             <th>Primer Apellido</th>
             <th>Segundo Apellido</th>
@@ -33,7 +33,7 @@
             @foreach ($person as $value)
             @if ($value->identificacion != '' && $value->nombre != '' && $value->primer_apellido != '' && $value->segundo_apellido != '' &&
           $value->fecha_nacimiento != '' && $value->tipo_sangre != '' && $value->peso_en_kilos != '' 
-          && $value->estatura_en_centimetros != '')
+          && $value->estatura_en_centimetros != ''&& $value->genero != "")
                
                 <tr>
                   <td>{{$value->identificacion}}</td>

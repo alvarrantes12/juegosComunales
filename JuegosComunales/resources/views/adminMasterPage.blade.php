@@ -47,7 +47,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="homePage" class="logo">
+    <a href="adminMasterPageSlider" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>J</b>C</span>
       <!-- logo for regular state and mobile devices -->
@@ -134,20 +134,30 @@
           </a>
           <ul class="treeview-menu">
            
-        <!-- <li><a href="#"><i class="fa fa-circle-o"></i>Representantes Comunales</a></li>-->
+        <li><a href="{{URL::to('showD/')}}"><i class="fa fa-circle-o"></i>Delegados</a></li>
             <li><a href="{{URL::to('showP/')}}"><i class="fa fa-circle-o"></i>Atletas</a></li>
-          
-        <!--  <li><a href="#"><i class="fa fa-circle-o"></i>Personal Tecnico</a></li>-->
-          
-        <!--  <li><a href="#"><i class="fa fa-circle-o"></i>Administradores</a></li>-->
+           <li><a href="{{URL::to('showA/')}}"><i class="fa fa-circle-o"></i>Administrador</a></li>
+           <li><a href="{{URL::to('showExtra/')}}"><i class="fa fa-circle-o"></i>Personal de apoyo</a></li>
+           <li><a href="{{URL::to('newCoa/')}}"><i class="fa fa-circle-o"></i>Agregar Nuevo Participante</a></li>
           </ul>
         </li>
-
-
+        
+      <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-link"></i> <span>Inscripciones en Conjunto</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{URL::to('excel/')}}"><i class="fa fa-circle-o"></i>Subir Archivo de Excel</a></li>
+            <li><a href="{{URL::to('download/')}}"><i class="fa fa-circle-o"></i>Descargar Plantilla de Excel</a></li>
+          </ul>
+          </li>
 
         <li class="treeview">
           <a href="{{URL::to('report/')}}">
-            <i class="glyphicon glyphicon-paste"></i> <span>Reporte</span>
+            <i class="glyphicon glyphicon-file"></i> <span>Reporte</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -167,15 +177,8 @@
         <!--  </ul>-->
         <!--</li>-->
         
-         <li class="treeview">
-          <a href="{{URL::to('excel/')}}">
-            <i class="glyphicon glyphicon-link"></i> <span>Inscripciones en Conjunto</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          </li>
-        
+         
+          
         <li class="treeview">
           <a href="{{URL::to('edition/')}}">
             <i class="glyphicon glyphicon-calendar"></i> <span>Edición</span>
@@ -212,7 +215,7 @@
         
         <li class="treeview">
           <a href="{{URL::to('showDistrict/')}}">
-            <i class="glyphicon glyphicon-map-marker"></i> <span>Distrito</span>
+            <i class="glyphicon glyphicon-globe"></i> <span>Distrito</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

@@ -35,7 +35,7 @@ class categoryController extends Controller
     {
         $all = category::join('categorySport', 'category.IDCategory', '=' , 'categorySport.IDCategory')
                     -> join('sport', 'categorySport.IDSport', '=', 'sport.IDSport')
-                     ->select('category.nameCategory', 'category.IDCategory', 'category.active', 'category.startDate','category.endDate','sport.nameSport')
+                     ->select('category.nameCategory', 'category.IDCategory', 'category.active', 'category.startAge','category.endAge','sport.nameSport')
                       ->get();
            return view('/Category/show')
          ->with ('category', $all);
@@ -48,31 +48,41 @@ class categoryController extends Controller
     
      public function insertNewCategory(Request $request)
   {
+      $exist = $this-> exist($request-> category);
+      
+      if(!$exist){
       $category = new category;
        $category->nameCategory = $request-> category;
         $category->active = 1;
-         $category->startDate = $request-> startDate;
-          $category->endDate = $request-> endDate;
+         $category->startAge = $request-> startAge;
+          $category->endAge = $request-> endAge;
           
         $category->save();
        $this-> relateCategory($request->category, $request->sport);
+       $request->session()->flash('category', '¡Categoría creada correctamente!');
       return $this->index();
+      }else{
+      $request->session()->flash('category', '¡Ya existe una categoria con este nombre!'); 
+      return $this -> index ();  
+      }
+      
   }   
   
-   public function relateCategory($category, $sport){
+  public function relateCategory($category, $sport){
       $idCategory = Category::select('IDCategory') -> where ('nameCategory', $category)->first();
       $categorySport = new categorySport;
       $categorySport->IDCategory = $idCategory -> IDCategory;
       $categorySport->IDSport = $sport;
       $categorySport->save();
-  }
+  } 
   
-  public function editCategory($IDCategory){
+  public function editCategory(Request $request, $IDCategory){
            $category = Category::join ('categorySport', 'category.IDCategory' , '=', 'categorySport.IDCategory' )
             ->join ('sport', 'categorySport.IDSport', '=',  'sport.IDSport' )
                ->select('sport.nameSport','sport.IDSport','category.IDCategory', 
-               'category.nameCategory', 'category.startDate', 'category.endDate', 'category.active')->where('category.IDCategory', $IDCategory)
+               'category.nameCategory', 'category.startAge', 'category.endAge', 'category.active')->where('category.IDCategory', $IDCategory)
                       ->first();
+        $request->session()->flash('category', '¡Categoría  editada correctamente!');
         return view('/Category/edit')
             ->with ('eCategory', $category)
               ->with ('sport', Sport::all());
@@ -100,6 +110,12 @@ class categoryController extends Controller
        }
         
     }
+    
+    public function getAge($idCategory){
+        $age = category::select('startAge', 'endAge')->where('IDCategory', $idCategory)->get();
+        return $age;
+    }
+    
     public function search (Request $request){
          $all = category::where('nameCategory', $request->filter)
         ->get();
@@ -111,11 +127,17 @@ class categoryController extends Controller
     
     public function edit (Request $request){
         Category::where('IDCategory', $request->IDCategory)->update(['nameCategory' => $request->nameCategory,
-        'startDate' => $request->startDate, 'endDate' => $request->endDate]);
+        'startAge' => $request->startAge, 'endAge' => $request->endAge]);
         categorySport::where ('IDCategory', $request->IDCategory)->update(['IDSport' => $request->sport]);
         return $this->index();
     }
   
-   
+    public function exist($nameCategory){
+    if (Category::where('nameCategory', '=', $nameCategory)->exists()) {
+       return true;
+    }else{
+       return false;
+    }
+  }
  
 }

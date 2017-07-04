@@ -12,8 +12,8 @@ I Ciclo, 2017
 Clase: specification
 Vista que se encarga de crear un formulario con el fin de seleccionar el deporte, la categoría y la rama
 específicos con el fin de recolectar parte de los datos de la inscripción de los participantes en el sistema-->
-@extends('adminMasterPage')
-@section('adminContent')
+@extends('masterPage')
+@section('content')
 <section>
       <div class="row">
 <div class="form-group">
@@ -34,28 +34,26 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
   </div>
   <div class="panel-body">
       
-  <form class="form-horizontal" role="form" method='POST' id="newPS" name="newPS" action="{{ url('insertDoc/') }}">
+  <form class="form-horizontal" role="form" method='POST' id="newPS" name="newPS" action="{{ url('insertCompleteAthlete/') }}">
   {{ csrf_field() }} 
                  
  <div  >
     <label for="" class="col-lg-4 control-label">Altura</label>
     <div class="col-lg-6">
-        
      <input type="number" id="height" name="height" class="form-control" min="80" required autofocus>
      <input type="text" id="year" name="year" class="form-control" style="display:none" value='{{$year}}' required autofocus>
     </div>
-    <span class="col-lg-14">cm</span>
+    <label class="col-lg-14" style = "padding:8px;">cm</label>
  </div>
 
-<div  >
+<div>
     <label for="" class="col-lg-4 control-label">Peso</label>
     <div class="col-lg-6">
 
   <input type="number" id="weight" name="weight" class="form-control" min="20" required autofocus>
       
     </div>
-    <br>
-     <span class="col-lg-14">kg</span>
+     <label class="col-lg-14" style = "padding:8px;">kg</label>
  </div>
 
 
@@ -85,6 +83,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
   <div class="panel-body">
  
 <div  >
+    
     <label for="" class="col-lg-4 control-label">Deporte</label>
     <div class="col-lg-6">
       <select  class="form-control" id = "sport" name = "sport" required autofocus>
@@ -171,7 +170,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 <div class="container-fluid">
     <div class="container">
         <div class="col-md-7 col-md-offset-2 text-center">
-           <button type="submit" class="btn btn-primary"><span class="glyphicon"> </span><span>Finalizar inscripcion</span></button>
+           <button type="submit" class="btn btn-primary"><span class="glyphicon"> </span><span>Finalizar inscripción</span></button>
         </div>
     </div>
 </div>
@@ -208,10 +207,11 @@ $(document).ready(function() {
         	$("#test").empty();
         	 $("#test").hide();
         	$("#label").hide();
-        	
         
 	$.getJSON(('getTest/')+$("#category").val(),function(data){
 	     $("#test").append('<option value="0">Seleccione una prueba</option>');
+	     
+
 	    $.each(data, function(id,item){
 	        if (data != null) {
             $("#test").show();
@@ -253,5 +253,4 @@ var age= year - person;
 	
 });
 </script>
-
 

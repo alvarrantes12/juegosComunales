@@ -116,7 +116,7 @@ class ExampleTest extends TestCase
         $com = 'community';
        
         DB::table('community')
-            ->insert(['nameCommunity' => $com]);
+            ->insert(['nameCommunity' => $com, 'active'=>1]);
             
         $IDCommunity =DB::table('community')
             ->where('nameCommunity', 'community')->value('IDCommunity');
@@ -132,7 +132,7 @@ class ExampleTest extends TestCase
         $dis = 'district';
        
         DB::table('district')
-            ->insert(['nameDistrict' => $dis]);
+            ->insert(['nameDistrict' => $dis,'avtive'=>1]);
             
         $IDDistrict =DB::table('district')
             ->where('nameDistrict', 'district')->value('IDDistrict');

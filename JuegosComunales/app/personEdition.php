@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class edition extends Model
+class personEdition extends Model
 {
-     protected $table = 'edition';
+     protected $table = 'personEdition';
 
     /**
      * The attributes that should be hidden for arrays.
@@ -14,6 +14,6 @@ class edition extends Model
      * @var array
      */
     protected $fillable = [
-        'IDEdition', 'nameEdition', 'year', 'startDate', 'finishDate',
+        'IDPerson','IDEdition',
     ];
 }

@@ -15,7 +15,8 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 @extends('adminMasterPage')
 
 @section('adminContent')
-
+<section>
+      <div class="row">
     <div class="col-md-10 col-md-offset-1 text-center">
             <div class="panel panel-success">
                <div class="panel-heading">
@@ -58,7 +59,8 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 </div>
 </div>
 
-
+ </div>
+</section>
  
 <script type="text/javascript">
     $(document).ready(function($)  {

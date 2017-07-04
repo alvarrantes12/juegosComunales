@@ -58,12 +58,20 @@ class testController extends Controller
   
   public function insertNewTest(Request $request)
   {
+        $exist = $this-> exist($request->testName);
+      
+      if(!$exist){
       $test = new test;
       $test->nameTest = $request-> testName;
+      $test->active = 1;
       $test->save();
       $this-> relateTest($request->category, $request->testName);
+      $request->session()->flash('test', '¡ Prueba creada correctamente!');
       return $this->index();
-
+      }else{
+      $request->session()->flash('test', '¡Ya existe una prueba con este nombre!'); 
+      return $this -> index ();  
+      }
   }   
   
    public function relateTest($category, $testName ){
@@ -80,14 +88,15 @@ class testController extends Controller
         return $this -> index();
     }
     
-    public function edit($IDTest){
+    public function edit(Request $request, $IDTest){
     $all = test::join('categoryTest', 'test.IDTest', '=' , 'categoryTest.IDTest')
                     -> join('category', 'categoryTest.IDCategory', '=', 'category.IDCategory')
                     ->join('categorySport','category.IDCategory','=','categorySport.IDCategory')
                     -> join ('sport', 'categorySport.IDSport','=','sport.IDSport')
                     ->select('nameCategory', 'nameTest', 'nameSport', 'test.IDTest', 'sport.IDSport', 'category.IDCategory')
                     ->where('test.IDTest',$IDTest )
-                      ->first();
+                     ->first();
+     $request->session()->flash('test', '¡Dato correctamente editado!');
         return view('/Test/edit')
             ->with ('test', $all)
               ->with ('sport', Sport::all())
@@ -111,9 +120,18 @@ class testController extends Controller
                     ->orWhere('nameSport', $request->filter)
                     ->orWhere('nameCategory', $request->filter)
                     ->get();
-      
-            return view('/Test/show')
-            ->with('test', $all);
+                    
+            if(empty($all->nameTest)){    
+                 
+                 return view('/Test/show')
+                    ->with('test', $all);
+             
+            } else {
+                $request->session()->flash('test', '¡No existen coincidencias para '+ $request->filter +'!');   
+                return view('/Test/show')
+                    ->with('test', $all);
+            } 
+                    
        
      }
      
@@ -123,6 +141,22 @@ class testController extends Controller
          
          return  $category;
      }
+  
+   public function getTest($IDCategory){
+         $test = test::join('categoryTest', 'test.IDTest', '=', 'categoryTest.IDTest')
+         ->join('category','categoryTest.IDCategory','=','category.IDCategory')
+         ->select('test.IDTest', 'test.nameTest')->where('category.IDCategory', $IDCategory)->get();
+         
+         return  $test;
+     }
+  
+  public function exist($nameTest){
+    if (Test::where('nameTest', '=', $nameTest)->exists()) {
+       return true;
+    }else{
+       return false;
+    }
+  }
   
   
 }

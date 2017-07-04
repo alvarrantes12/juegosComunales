@@ -1,6 +1,7 @@
  <!--Universidad de Costa Rica
 Informática Empresarial
-
+IF7102 - Multimedios
+Prof. Jonathan Rojas
 Proyecto Inscripciones Juegos comunales Comité de deportes de Grecia
 Estudiantes:
 Paula Álvarez Barrantes – B40301
@@ -10,37 +11,22 @@ I Ciclo, 2017
 
 Clase: specification
 Vista que se encarga de crear un formulario con el fin crear un nuevo canton en la base de datos-->
-@extends('adminMasterPage')
+@extends('masterPage')
 
-@section('adminContent')
+@section('content')
 <section>
       <div class="row">
 <div class="col-md-10 col-md-offset-1 text-center">
-            <div class="panel panel-info">
+            <div class="panel panel-success">
                <div class="panel-heading">
                  <h4 style="color: #899B82;">Reportes</h4>
                </div>
                <div class="panel-body">
 
-    <form class="form-horizontal" role="form" method="POST" target="_blank" action="{{ url('generatePDF/') }}">
+    <form class="form-horizontal" role="form" method="POST" target="_blank" action="{{ url('reportPDF/') }}">
       
         <div class="form-group">
             {!!csrf_field() !!}
-            <label for="" class="col-lg-4 control-label">Seleccione el distrito</label>
-            <div class="col-lg-6">
-                 <select  class="form-control" id = "district" name = "district" required autofocus>
-                    <option value="0" selected>Seleccione un distrito</option>
-                        @foreach ($district as $d)
-                            <option  value ='{{$d->IDDistrict}}'>{{$d->nameDistrict}}</option>
-                        @endforeach
-                   </select>
-            </div>
-                     <label for="" class="col-lg-4 control-label">Seleccione la comunidad:</label> 
-                <div class="col-lg-6 category">
-                    <select class="form-control" id = "community" name = "community" required autofocus>
-                        <option value="0" selected>Debe seleccionar un distrito primero</option>
-                    </select>
-                </div>
                 
                  <label for="" class="col-lg-4 control-label">Seleccione el deporte</label>
             <div class="col-lg-6">
@@ -51,7 +37,7 @@ Vista que se encarga de crear un formulario con el fin crear un nuevo canton en 
                         @endforeach
                    </select>
             </div>
-                     <label for="" class="col-lg-4 control-label">Seleccione la categoría:</label> 
+                     <label for="" class="col-lg-4 control-label">Seleccione la categoria:</label> 
                 <div class="col-lg-6 category">
                     <select class="form-control" id = "category" name = "category" required autofocus>
                         <option value="0" selected>Debe seleccionar un deporte primero</option>
@@ -76,21 +62,7 @@ Vista que se encarga de crear un formulario con el fin crear un nuevo canton en 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function() {
-    
-    $("#district").change(function() {
-        	$("#community ").empty();
-	$.getJSON(('getCommunity/')+$("#district").val(),function(data){
-	     $("#community").append('<option value="0">Seleccione una comunidad</option>');
-	    $.each(data, function(id,item){
-		    $("#community").append('<option value="'+item.IDCommunity+'">'+item.nameCommunity+'</option>');
-	    });
-	});
-	
-    });
-});
-</script>
+
 
 <script type="text/javascript">
 $(document).ready(function() {

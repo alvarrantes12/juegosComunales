@@ -2,8 +2,15 @@
 
 @section('adminContent')
 
-  
+  <section>
+      <div class="row">
   <div class="col-md-10 col-md-offset-1 text-center">
+      @if (Session::has('error'))
+             <div align = "center">
+             <div class="alert alert-danger">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('error')}}</div></div>
+             @endif
             <div class="panel panel-success">
                <div class="panel-heading">
                   <h4 style="color: #899B82;">Nueva Comunidad</h4>
@@ -42,6 +49,7 @@
 </div>
 </div>
 </div>
-
+</div>
+</section>
 
 @endsection

@@ -46,16 +46,22 @@ class communityController extends Controller
     
     public function newCommunity(Request $request)
   {
-      if($this->communityExist($request-> community) == null){
+     $exist = $this-> exist($request->community);
+      
+      if(!$exist){
         $community = new community;
         $community->nameCommunity = $request->community;
+        $community->active = 1;
         $community->save();
         $this-> relateDistrict($request->community, $request->district);
+        $request->session()->flash('community', '¡ Comunidad creada correctamente!');
         return $this->index();
       }else{
-         return $this-> index();
-          
-      }
+      $request->session()->flash('community', '¡Ya existe una comunidad con este nombre!'); 
+      return $this -> index ();  
+  }
+     
+     
   }
   
   public function relateDistrict($community , $district ){
@@ -82,12 +88,13 @@ class communityController extends Controller
     return $this->index();
 }
 
- public function edit($IDCommunity){
+ public function edit(Request $request, $IDCommunity){
          $community = community::join('communityDistrict', 'community.IDCommunity', '=' , 'communityDistrict.IDCommunity')
                     -> join('district', 'communityDistrict.IDDistrict', '=', 'district.IDDistrict')
                      ->select('community.nameCommunity', 'district.nameDistrict', 'communityDistrict.IDDistrict', 'community.IDCommunity')->where('community.IDCommunity', $IDCommunity)
                       ->first();
             $district = District::all();
+            $request->session()->flash('community', '¡ Comunidad editada correctamente!');
         return view('/Community/edit')
             ->with ('Community', $community)->with ('district', $district);
             
@@ -121,4 +128,39 @@ class communityController extends Controller
          return  $community;
        
    } 
+   
+    public function exist($nameCommunity){
+    if (community::where('nameCommunity', '=', $nameCommunity)->exists()) {
+       return true;
+    }else{
+       return false;
+    }
+  }
+   
+  public function deleteC($IDCommunity){
+      if($this->active($IDCommunity)){
+        community::where('IDCommunity', $IDCommunity)
+          ->update(['active' => 0]);
+          return $this->index();
+    }else{
+        community::where('IDCommunity', $IDCommunity)
+          ->update(['active' => 1]);
+          return $this->index();
+    }} 
+    
+    private function active($IDCommunity){
+       $cat = community::select('active')->where('IDCommunity', $IDCommunity)->get();
+       $c = $cat[0]->active;
+       if($c == 0){
+           return false;
+       }else{
+           return true;
+       }
+        
+    }  
+   
+   
+   
+   
+   
 }

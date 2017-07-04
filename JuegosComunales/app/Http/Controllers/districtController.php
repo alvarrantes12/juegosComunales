@@ -43,12 +43,19 @@ class districtController extends Controller
   
   public function newDistrict(Request $request){
          
-    if($this->districtExist($request-> district) == null){
+      $exist = $this-> exist($request->district);
+      
+      if(!$exist){
      $district = new district;
      $district->nameDistrict = $request->district;
+     $district->active = 1;
      $district->save();
+     $request->session()->flash('district', '¡ Distrito creado correctamente!');
      return $this->index();
-    }else{}
+      }else{
+      $request->session()->flash('district', '¡Ya existe un distrito con este nombre!'); 
+      return $this -> index ();  
+     }
     }
     
      private function districtExist($district){
@@ -64,9 +71,10 @@ class districtController extends Controller
     
 }
 
-public function edit($IDDistrict){
+public function edit(Request $request, $IDDistrict){
          $district = district::where('district.IDDistrict', $IDDistrict)
                       ->first();
+         $request->session()->flash('district', '¡ Distrito editado correctamente!');
         return view('/District/edit')
             ->with ('district', $district);
             
@@ -87,4 +95,37 @@ public function search (Request $request){
             ->with('district', $all);
        
     }
+    
+     public function exist($nameDistrict){
+    if (district::where('nameDistrict', '=', $nameDistrict)->exists()) {
+       return true;
+    }else{
+       return false;
+    }
+  }
+  
+    public function deleteD($IDDistrict){
+      if($this->active($IDDistrict)){
+        district::where('IDDistrict', $IDDistrict)
+          ->update(['active' => 0]);
+          return $this->index();
+    }else{
+        district::where('IDDistrict', $IDDistrict)
+          ->update(['active' => 1]);
+          return $this->index();
+    }} 
+    
+    private function active($IDDistrict){
+       $cat = district::select('active')->where('IDDistrict', $IDDistrict)->get();
+       $c = $cat[0]->active;
+       if($c == 0){
+           return false;
+       }else{
+           return true;
+       }
+        
+    }
+    
+    
+    
 }

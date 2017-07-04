@@ -17,8 +17,8 @@ class Category extends Migration
             $table->increments('IDCategory');
             $table->string('nameCategory',25);
             $table->boolean('active');
-            $table->date('startDate');
-            $table->date('endDate');
+           $table->integer('startAge');
+            $table->integer('endAge');
             $table->timestamps();
         });
     }

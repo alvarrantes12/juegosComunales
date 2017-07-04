@@ -1,14 +1,14 @@
-@extends('adminMasterPage')
+@extends('masterPage')
 
-@section('adminContent')
+@section('content')
 <section>
       <div class="row">
   <div class="col-md-10 col-md-offset-1 text-center">
-       @if (Session::has('fileError'))
+      @if (Session::has('fileErrorDel'))
              <div align = "center">
              <div class="alert alert-error">
              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-             {{Session::get('fileError')}}</div></div>
+             {{Session::get('fileErrorDel')}}</div></div>
             @endif
             <div class="panel panel-success">
                <div class="panel-heading">
@@ -19,31 +19,10 @@
    <form method="POST" action="{{url ('saveExcel/')}}" accept-charset="UTF-8" enctype="multipart/form-data">
             
            {{ csrf_field() }}
-    
-            <div class="form-group text-right">
-                <div>
-                   <label for="" class="col-lg-4 control-label">Distrito</label>
-                   <div class="btn-group col-lg-6">
-                   <select  class="form-control" id="district" name="district" required autofocus>
-                   <option value="0" selected>Seleccione un distrito...</option>
-                   @foreach ($district as $p)
-                   <option value ='{{$p->IDDistrict}}'>{{$p->nameDistrict}}</option>
-                   @endforeach
-                   </select>
-                   </div>
-                  </div>
-                  
-                  
-                  <div>
-                   <label for="" class="col-lg-4 control-label">Comunidad</label>
-                   <div class="btn-group col-lg-6">
-                   <select class="form-control" id="community" name="community" required autofocus>
-                   <option value="0" selected>Debe seleccionar un distrito primero...</option>
-                   </select>
-                   </div>
-                  </div>
+            
+            <div class="form-group">
                
-               <label for="" class="col-lg-4 control-label">Seleccione un deporte</label>
+               <label for="" class="col-lg-4 control-label">Seleccione un deporte:</label>
                 <div class="col-lg-6 sport">
                    <select  class="form-control" id = "sport" name = "sport" required autofocus>
                     <option value="0" selected>Seleccione un tipo de deporte...</option>
@@ -52,7 +31,7 @@
                         @endforeach
                    </select>
                 </div>
-                <label for="" class="col-lg-4 control-label">Seleccione una categoría</label> 
+                <label for="" class="col-lg-4 control-label">Seleccione una categoría:</label> 
                 
                 <div class="col-lg-6 category">
                     <select class="form-control" id = "category" name = "category" required autofocus>
@@ -60,7 +39,7 @@
                 </select>
                 </div>
                 
-                  <label class="col-md-4 control-label">Nuevo Archivo</label> 
+                  <label class="col-md-4 control-label">Nuevo Archivo:</label> 
               <div class="col-md-6">
                     
                   
@@ -77,7 +56,6 @@
                 <button type="submit" class="btn btn-primary">Aceptar</button>
               </div>
             </div>
-            
           </form>
    
 
@@ -99,24 +77,6 @@ $(document).ready(function() {
 	    $.each(data, function(id,item){
 	        
 		    $("#category").append('<option value="'+item.IDCategory+'">'+item.nameCategory+'</option>');
-	    });
-	});
-	
-    });
-});
-</script>
-
-
-
-<script type="text/javascript">
-$(document).ready(function() {
-    
-    $("#district").change(function() {
-        	$("#community ").empty();
-	$.getJSON(('getCommunity/')+$("#district").val(),function(data){
-	     $("#community").append('<option value="0">Seleccione una comunidad</option>');
-	    $.each(data, function(id,item){
-		    $("#community").append('<option value="'+item.IDCommunity+'">'+item.nameCommunity+'</option>');
 	    });
 	});
 	

@@ -16,7 +16,8 @@ Vista que se encarga de crear un formulario con el fin deagregar tipos de usuari
 
 @section('adminContent')
 
-
+<section>
+      <div class="row">
 
 <div class="col-md-10 col-md-offset-1 text-center">
             <div class="panel panel-success">
@@ -46,5 +47,6 @@ Vista que se encarga de crear un formulario con el fin deagregar tipos de usuari
 </div>
 </div>
 
-
+</div>
+</section>
 @endsection

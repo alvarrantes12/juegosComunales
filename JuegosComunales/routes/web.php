@@ -59,7 +59,7 @@ Route::get('/deleteCategory/{IDCategory}', 'categoryController@deleteCategory');
 Route::get('/editCategory/{IDCategory}', 'categoryController@editCategory');
 Route::post('/editCategory', 'categoryController@edit');
 Route::post('/searchCategory', 'categoryController@search');
-
+Route::get('/getAge/{IDCategory}', 'categoryController@getAge');
 
 //Rutas que se encargan del IMEC de Edición.
 Route::get('/edition', 'editionController@index');
@@ -78,6 +78,7 @@ Route::get('/deleteTest/{IDTest}', 'testController@deleteTest');
 Route::get('/editTest/{IDTest}', 'testController@edit');
 Route::post('/editTest', 'testController@editTest');
 Route::post('/searchTest', 'testController@search');
+Route::get('/getTest/{category}', 'testController@getTest');
 Route::get('/getCategory/{sport}', 'testController@getCategory');
 
 //Rutas que se encargan del IMEC de Deportes.
@@ -99,6 +100,10 @@ Route::get('/editDistrict/{IDDistrict}', 'districtController@edit');
 Route::post('/editDistrict', 'districtController@editDistrict');
 Route::post('/searchDistrict', 'districtController@search');
 
+Route::get('/deleteDistrictt/{IDDistrict}', 'districtController@deleteD');
+
+
+
 // Rutas que se encargan del IMEC de Comunidad.
 Route::post('/newCommunity','communityController@newCommunity');
 Route::get('/addCommunity', 'communityController@add');
@@ -108,6 +113,7 @@ Route::get('/editCommunity/{IDCommunity}', 'communityController@edit');
 Route::post('/editCommunity', 'communityController@editCommunity');
 Route::get('/searchCommunity', 'communityController@search');
 Route::get('/getCommunity/{district}', 'communityController@getCommunity');
+Route::get('/deleteCommunityy/{IDCommunity}', 'communityController@deleteC');
 
 
 // Rutas que se encargan del IMEC de Rol de Usuario.
@@ -122,31 +128,75 @@ Route::get('/upRol','roleController@updateRole');
 //Rutas que se encargan de la generación de reportes
 Route::get('/report', 'ReportController@index');
 Route::post('/generatePDF','ReportController@generate');
+Route::get('/reportDel', 'ReportController@indexDelegate');
+Route::post('/reportPDF','ReportController@generateReport');
 
+
+//Rutas que se encargan del IMEC de participantes realizado por un delegado
+Route::get('/showAthletes','personController@indexDelegate');
+Route::get('/insertNewPart','personController@insertPart');
+Route::post('/insertCompleteRegister','personController@insertPersonByDelegate');
+Route::post('/insertCompleteAthlete','personController@insertByAthleteDelegate');
+Route::get('/editAthleteD/{IDPerson}', 'personController@editAthleteByDelegate');
+Route::post('/updateAthlete', 'personController@updateAthlete');
+Route::get('/deleteAthleteD/{IDPerson}', 'personController@deleteByDelegate');
 
 // Rutas que se encargan del IMEC de Participantes.
 Route::get('/showP', 'personController@index');
+
 Route::get('/newCo','personController@insertNew');
+
 Route::get('/newDoc','personController@documents');
 Route::get('/newCoa','personController@insertNewA');
+
 Route::post('/insertA','personController@insertPerson');
+
 Route::post('/insertDoc','personController@insertDoc');
 Route::post('/searchPerson', 'personController@search');
+Route::post('/filterPerson', 'personController@searchFilter');
+
 Route::get('/deleteAthlete/{IDPerson}', 'personController@delete');
 Route::get('/upAthlete', 'personController@editAthlete');
-
-
-
+Route::post('/saveData', 'personController@saveData');
 
 Route::get('/editAthlete/{IDPerson}', 'personController@eAthlete');
 Route::post('/editA', 'personController@editA');
 
 
-//Rutas resetPassword
+// Rutas que se encargan del IMEC de Delegado.
+Route::get('/showD', 'personController@showDelegados');
+Route::post('/searchDelegado', 'personController@searchDelegado');
+Route::get('/editDelAdmin/{IDPerson}', 'personController@editDelAdmin');
+Route::post('/editDelAdmin', 'personController@editDA');
+Route::get('/deleteDel/{IDPerson}', 'personController@deleteDel');
+
+// Rutas que se encargan del IMEC de Administradores.
+Route::get('/showA', 'personController@showAdmin');
+Route::post('/searchAdmin', 'personController@searchAdministrador');
+Route::get('/deleteAdmin/{IDPerson}', 'personController@deleteAdmin');
+Route::get('/editAdmin/{IDPerson}', 'personController@editAdmin');
+Route::post('/editAdminS', 'personController@editAdministrador');
+
+//Rutas Personal de apoyo.
+Route::get('/showExtra', 'personController@showExtra');
+Route::post('/searchAp', 'personController@searchExtra');
+Route::get('/editApoyo/{IDPerson}', 'personController@editExtra');
+Route::post('/editExtraS', 'personController@editExtraS');
+Route::get('/deleteExtra/{IDPerson}', 'personController@deleteExtra');
+
+//Rutas resetPassword.
 Route::post ('/resetPassword', 'Auth\ResetPasswordController@updatePassword');
 
+//Rutas inscripciones por medio de Excel
 Route::get ('/excel', 'excelController@index');
 Route::get ('/excelData', 'excelController@readExcel');
 Route::get ('/showExcelData', 'excelController@showFile');
 Route::post ('/saveExcel', 'excelController@save');
+Route::get ('/download', 'excelController@downloadExcelSheet');
+
+//Rutas inscripciones por medio de Excel realizado por un delegado
+Route::get ('/excelUpload', 'excelController@indexDelegate');
+Route::post ('/saveExcelD', 'excelController@save');
+Route::get ('/excelDataRead', 'excelController@readExcel');
+Route::get ('/showExcelDataD', 'excelController@showFile');
 

@@ -14,8 +14,17 @@ Vista que se encarga de crear un formulario con el fin de seleccionar el deporte
 específicos con el fin de recolectar parte de los datos de la inscripción de los participantes en el sistema-->
 @extends('adminMasterPage')
 @section('adminContent')
+<section>
+      <div class="row">
 <div class="col-md-12 col-md-offset-0 text-center">
+    @if (Session::has('category'))
+             <div align = "center">
+             <div class="alert alert-success">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('category')}}</div></div>
+            @endif
    <div class="panel panel-success">
+      
       <div class="panel-heading">
          <h4 style="color: #899B82;">Categorías Registradas</h4>
       </div>
@@ -57,11 +66,14 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                      <th>Nombre de la categoría</th>
                      <th>Deporte al que pertenece</th>
                      <th>Estado</th>
-                     <th>Fecha de nacimiento Inicio</th>
-                     <th>Fecha de nacimiento Final</th>
+                     <th>Edad mínima</th>
+                     <th>Edad máxima</th>
                      <th></th>
                      <th></th>
                   </thead>
+                   @if(count($category) < 1)
+                <td>No existen coincidencias para su búsqueda</td>
+               @endif
                   @foreach ($category as $c)
                   <tr>
                      <td>{{$c->nameCategory}}</td>
@@ -72,8 +84,8 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                         <td>Inactivo</td>
                      @endif
                      
-                     <td>{{$c->startDate}}</td>
-                     <td>{{$c->endDate}}</td>
+                     <td>{{$c->startAge}} Años</td>
+                     <td>{{$c->endAge}} Años</td>
                      
                      <td>
                         <a href="{{URL::to('/editCategory/' . $c->IDCategory)}}">
@@ -104,4 +116,6 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
       </div>
    </div>
 </div>
+ </div>
+   </section>
 @endsection

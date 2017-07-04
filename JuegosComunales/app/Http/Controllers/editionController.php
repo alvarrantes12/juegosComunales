@@ -47,23 +47,44 @@ class editionController extends Controller
     
      public function insertNewEdition(Request $request)
   {
+      $exist = $this-> exist($request->nameEdition,$request-> year);
+      
+      if(!$exist){
       $edition = new edition;
       $edition->nameEdition = $request-> nameEdition;
       $edition->year = $request-> year;
       $edition->startDate = $request-> startDate;
       $edition->endDate = $request-> endDate;
+      $edition->active= 1;
       $edition->save();
+      $request->session()->flash('edition', '¡ Edition creada correctamente!');
       return $this -> index ();
+      }else{
+      $request->session()->flash('edition', '¡Ya existe una edicion con este nombre!'); 
+      return $this -> index ();  
+      }
   }
+  
+   public function exist($nameEdition){
+    if (Edition::where('nameEdition', '=', $nameEdition)->exists()) {
+       return true;
+    }else{
+       return false;
+    }
+  }
+  
+  
+  
   
    public function deleteEdition($IDEdition){
        $edition = Edition::where('IDEdition', $IDEdition)->delete();
        return $this -> index ();
     }
   
-    public function editEdition($IDEdition){
+    public function editEdition(Request $request, $IDEdition){
          $edition = Edition::select('IDEdition','nameEdition', 'year', 'startDate', 'endDate')->where('IDEdition', $IDEdition)
                       ->first();
+                      $request->session()->flash('edition', '¡ Edition editada correctamente!');
         return view('/Edition/edit')
             ->with ('eEdition', $edition);
     }
@@ -81,4 +102,5 @@ class editionController extends Controller
             ->with('edition', $all);
        
     }
+    
 }

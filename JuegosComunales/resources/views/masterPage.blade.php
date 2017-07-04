@@ -125,48 +125,44 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">Menu</li>
-        <li class="treeview">
-          <a href="{{URL::to('newCo/')}}">
-            <i class="glyphicon glyphicon-edit"></i> <span>Inscribir</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-        </li>
+        
 
         <li class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-paste"></i> <span>Reporte</span>
+            <i class="glyphicon glyphicon-paste"></i> <span>Inscripciones Individuales</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li>
-              <a href="#"><i class="fa fa-circle-o"></i> Level One
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li>
-                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+            <li><a href="{{URL::to('insertNewPart/')}}"><i class="fa fa-circle-o"></i>Inscribir Participantes</a></li>
+          
+            <li><a href="{{URL::to('showAthletes/')}}"><i class="fa fa-circle-o"></i>Atletas Inscritos</a></li>
+            
           </ul>
         </li>
+        
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-link"></i> <span>Inscripciones en Conjunto</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{URL::to('excelUpload/')}}"><i class="fa fa-circle-o"></i>Subir Archivo de Excel</a></li>
+            <li><a href="{{URL::to('download/')}}"><i class="fa fa-circle-o"></i>Descargar Plantilla de Excel</a></li>
+          </ul>
+          </li>
+        
+        <li class="treeview">
+          <a href="{{URL::to('reportDel/')}}">
+            <i class="glyphicon glyphicon-file"></i> <span>Reporte</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          </li>
   
       </ul>
     </section>
@@ -193,7 +189,7 @@
       <b>v 1.0</b> 
    </div>
    <div class="pull-center">
-     <img src="dist/img/LogoComite.png" class="img" alt="CCDRG" width="60" height="50">  <strong> <a href="https://es-la.facebook.com/comitecantonaldeportesGrecia/"> Comité Cantonal de Deportes y Recreación Grecia, 2017</a></strong>
+     <img src="/dist/img/LogoComite.png" class="img" alt="CCDRG" width="60" height="50">  <strong> <a href="https://es-la.facebook.com/comitecantonaldeportesGrecia/"> Comité Cantonal de Deportes y Recreación Grecia, 2017</a></strong>
     </div>
      <img src="/dist/img/fondo.jpg"  alt="Bandera Grecia" width="100%" height="10">
   </footer>

@@ -16,6 +16,7 @@ class Province extends Migration
       Schema::create('province', function (Blueprint $table) {
             $table->increments('IDProvince');
             $table->string('nameProvince',15);
+            $table->boolean('active');
             $table->timestamps();
         });
     }

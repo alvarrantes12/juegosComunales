@@ -2,10 +2,18 @@
 @section('adminContent')
 
 
-
+<section>
+      <div class="row">
 
 <div class="col-md-12 col-md-offset-0 text-center">
+     @if (Session::has('district'))
+             <div align = "center">
+             <div class="alert alert-success">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('district')}}</div></div>
+            @endif
             <div class="panel panel-success">
+                
                <div class="panel-heading">
                   <h4 style="color: #899B82;">Distritos Registradas</h4>
                </div>
@@ -49,21 +57,39 @@
                 <th></th>
                 <th></th>
             </thead>
+             @if(count($district) < 1)
+                <td>No existen coincidencias para su búsqueda</td>
+               @endif
             @foreach($district as $p)
             <tr>
                 <td>
                     {{$p->nameDistrict}}
                 </td>
+                
+                
                 <td>
                    <a href="{{URL::to('editDistrict/'.$p->IDDistrict)}}">
                        <i class="fa fa-pencil-square-o "></i><span> Editar</span>
                    </a>
                </td>
-               <td>
-                   <a href="{{URL::to('deleteDistrict/'.$p->IDDistrict)}}">
-                       <i class="fa fa-trash-o"></i><span> Eliminar</span>
-                   </a>
-               </td>
+               
+               @if ($p->active == 1)
+                            <td>
+                            <a href="{{URL::to('/deleteDistrictt/' . $p->IDDistrict)}}">
+                            <i class="fa fa-times"></i> <span>Desactivar</span>
+                            <!-- <small class="label pull-right bg-red">PDF</small> -->
+                            </a>
+                           </td>
+                           @else
+                           <td>
+                            <a href="{{URL::to('/deleteDistrictt/' . $p->IDDistrict)}}">
+                            <i class="fa fa-times"></i> <span>Activar</span>
+                            <!-- <small class="label pull-right bg-red">PDF</small> -->
+                            </a>
+                           </td>
+                        
+                           @endif
+                           
             </tr>
            
             @endforeach
@@ -73,4 +99,6 @@
                 </div>
     </div>
 </div>
+</div>
+</section>
 @endsection

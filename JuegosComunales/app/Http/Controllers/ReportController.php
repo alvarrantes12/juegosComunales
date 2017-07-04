@@ -24,116 +24,89 @@ class ReportController extends Controller
         return view('/Report/show')->with('district', District::all())
         -> with('sport', Sport::all());
     }
+    
+    
+    public function indexDelegate()
+    {
+        return view('/Report/showDel')
+        -> with('sport', Sport::all());
+   
+    }
     public function add(){
         return view('/Canton/new');   
         
     }
+    
+    
 
    
 
 
-     public function crearPDF($datos,$vistaurl)
+     public function crearPDF($datos,$vistaurl,$community, $category)
      { 
 
      $data = $datos;
+     $category1=$category->nameCategory;
+     $community1 = $community->nameCommunity;
+     $sport = $category->nameSport;
      $date = date('Y-m-d');
-     $view =  \View::make($vistaurl, compact('data', 'date'))->render();
+     $view =  \View::make($vistaurl, compact('data', 'date', 'community1', 'category1', 'sport'))->render();
      $pdf = \App::make('dompdf.wrapper');
      $pdf->loadHTML($view);
         
-    return $pdf->stream('reporte');
-    //     if($tipo==2){return $pdf->download('reporte.pdf'); }
+    return $pdf->stream('Reporte '.$date);
+    
      }
-
-
- public function generate(Request $request){
+     
+     public function generate(Request $request){
 
      $vistaurl= "/Report/report";
      $report= athlete::join('person','athlete.IDPerson','=','person.IDPerson')
      ->join('community','person.IDCommunity','=','community.IDCommunity')
      ->join('communityDistrict','community.IDCommunity','=','communityDistrict.IDCommunity')
      ->join('district','communityDistrict.IDDistrict','=','district.IDDistrict')
-     ->join('athleteCategory','athlete.IDPerson','=','athleteCategory.IDPerson')
-     ->join('category','athleteCategory.IDPerson','=','category.IDCategory')
-     ->join('categorySport','category.IDCategory','=','categorySport.IDCategory')
-     ->join('sport','categorySport.IDSport','=','sport.IDSport')
-     ->select('sport.nameSport','category.nameCategory','person.name','person.lastName1','person.lastName2','person.IDPerson', 'person.gender')
+     ->join ('athleteCategory','athlete.IDPerson','=','athleteCategory.IDPerson')
+     ->select('person.name','person.lastName1','person.lastName2','person.IDPerson', 'person.gender', 'community.nameCommunity')
      ->where ('community.IDCommunity', $request->community)
-     ->where('category.IDCategory',$request->category)
-     
+     ->where ('athleteCategory.IDCategory', $request->category)
     ->get();
+    $community = community::select('nameCommunity')
+    ->where('IDCommunity',$request->community)->first();
      
-    return $this->crearPDF($report, $vistaurl);
-
-
-
+      $category = category::join('categorySport','category.IDCategory','=','categorySport.IDCategory')
+      ->join('sport','categorySport.IDSport','=','sport.IDSport')
+      -> select('category.nameCategory', 'sport.nameSport')
+    ->where('category.IDCategory',$request->category)->first();
+     
+    return $this->crearPDF($report, $vistaurl, $community, $category);
 
  }
-     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+ public function generateReport(Request $request){
+   $community2 = session()->get('community');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+     $vistaurl= "/Report/report";
+     $report= athlete::join('person','athlete.IDPerson','=','person.IDPerson')
+     ->join('community','person.IDCommunity','=','community.IDCommunity')
+     ->join('communityDistrict','community.IDCommunity','=','communityDistrict.IDCommunity')
+     ->join('district','communityDistrict.IDDistrict','=','district.IDDistrict')
+     ->join ('athleteCategory','athlete.IDPerson','=','athleteCategory.IDPerson')
+     ->select('person.name','person.lastName1','person.lastName2','person.IDPerson', 'person.gender', 'community.nameCommunity')
+     ->where ('community.IDCommunity', $community2)
+     ->where ('athleteCategory.IDCategory', $request->category)
+    ->get();
+    $community = community::select('nameCommunity')
+    ->where('IDCommunity',$community2)->first();
+     
+      $category = category::join('categorySport','category.IDCategory','=','categorySport.IDCategory')
+      ->join('sport','categorySport.IDSport','=','sport.IDSport')
+      -> select('category.nameCategory', 'sport.nameSport')
+    ->where('category.IDCategory',$request->category)->first();
+     
+    return $this->crearPDF($report, $vistaurl, $community, $category);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+ }
 
 
 }

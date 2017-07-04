@@ -1,10 +1,17 @@
 @extends('adminMasterPage')
 @section('adminContent')
 
-
+<section>
+      <div class="row">
 
    <div class="col-md-12 col-md-offset-0 text-center">
             <div class="panel panel-success">
+                 @if (Session::has('community'))
+             <div align = "center">
+             <div class="alert alert-success">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('community')}}</div></div>
+            @endif
                <div class="panel-heading">
                  <h4 style="color: #899B82;">Comunidades Registradas</h4>
                </div>
@@ -54,6 +61,10 @@
                 <th></th>
                 <th ></th>
            </thead>
+             @if(count($community) < 1)
+                <td>No existe coincidencia para su búsqueda</td>
+               @endif
+           
            @foreach ($community as $c)
            <tr>
                <td>{{$c->nameCommunity}}</td>
@@ -63,11 +74,25 @@
                        <i class="fa fa-pencil-square-o "></i><span> Editar</span>
                    </a>
                </td>
-               <td>
-                   <a href="{{URL::to('deleteCommunity/'.$c->IDCommunity)}}">
-                       <i class="fa fa-trash-o"></i><span> Eliminar</span>
-                   </a>
-               </td>
+               
+                     @if ($c->active == 1)
+                            <td>
+                            <a href="{{URL::to('/deleteCommunityy/' . $c->IDCommunity)}}">
+                            <i class="fa fa-times"></i> <span>Desactivar</span>
+                            <!-- <small class="label pull-right bg-red">PDF</small> -->
+                            </a>
+                           </td>
+                           @else
+                           <td>
+                            <a href="{{URL::to('/deleteCommunityy/' . $c->IDCommunity)}}">
+                            <i class="fa fa-times"></i> <span>Activar</span>
+                            <!-- <small class="label pull-right bg-red">PDF</small> -->
+                            </a>
+                           </td>
+                        
+                           @endif
+                           
+               
            </tr>
            @endforeach
         </table>
@@ -76,4 +101,6 @@
                     </div>
     </div>
 </div>
+</div>
+</section>
 @endsection

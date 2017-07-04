@@ -1,7 +1,8 @@
 @extends('adminMasterPage')
 
 @section('adminContent')
-
+<section>
+      <div class="row">
    <div class="col-md-10 col-md-offset-1 text-center">
             <div class="panel panel-success">
                <div class="panel-heading">
@@ -38,5 +39,6 @@
     </div>
  </div>
 </div>
-   
+   </div>
+</section>
 @endsection

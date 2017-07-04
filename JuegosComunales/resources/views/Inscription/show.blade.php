@@ -11,17 +11,11 @@ I Ciclo, 2017
 
 Clase: users
 Vista que se encarga de crear un formulario con el fin de mostrar los atletas inscritos-->
-@extends('adminMasterPage')
-@section('adminContent')
+@extends('masterPage')
+@section('content')
 <section>
       <div class="row">
 <div class="col-md-12 col-md-offset-0 text-center">
-             @if (Session::has('athlete'))
-             <div align = "center">
-             <div class="alert alert-success">
-             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-             {{Session::get('athlete')}}</div></div>
-            @endif
             <div class="panel panel-success">
                <div class="panel-heading">
                   <h4 style="color: #899B82;">Atletas Registados</h4>
@@ -32,7 +26,7 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
    <div class="table-responsive">
       <table  class="table table-hover table-striped">
          <td aling="center">
-            <form class="form-horizontal" role="form" method="POST" action="{{url('searchPerson/')}}">
+            <form class="form-horizontal" role="form" method="POST" action="{{url('filterPerson/')}}">
                {{ csrf_field() }}
                <div class="col-md-9">
                   <input id="filter" placeholder='Digite la cedula del atleta, el nombre o apellido' type="text" class="form-control" name="filter" value="{{ old('filter') }}" required autofocus>
@@ -51,7 +45,7 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
          </td>
          <td align="center">
             <div class="col-md-12 ">
-               <a href="{{URL::to('newCoa/')}}"><button class="btn btn-info"><span class="glyphicon glyphicon-plus"> </span><span>  Agregar Nuevo Participante</span></button></a>
+               <a href="{{URL::to('insertNewPart/')}}"><button class="btn btn-info"><span class="glyphicon glyphicon-plus"> </span><span>  Agregar Nuevo Participante</span></button></a>
             </div>
          </td>
    </div>
@@ -73,12 +67,13 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
          <th></th>
             <th></th>
          </thead>
-          @if(count($person) < 1)
-                <td>No existen coincidencias para su búsqueda</td>
-               @endif
+          @if(count($person)<1)
+             <td>No hay resultados para la búsqueda realizada</td>
+             @endif
          @foreach ($person as $p)
          
          <tr>
+            
             <td>{{$p->IDPerson}}</td>
             <td>{{$p->name}}</td>
             <td>{{$p->lastName1}}</td>
@@ -90,16 +85,16 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
                <td>{{$p->nameCategory}}</td>
                
         <td>
-               <a href="{{URL::to('editAthlete/' . $p->IDPerson)}}">
+               <a href="{{URL::to('editAthleteD/' . $p->IDPerson)}}">
                   <i class="fa fa-pencil-square-o"></i> <span>Editar</span>
                  
              </a>
             </td>
-            <td>
-                   <a href="{{URL::to('deleteAthlete/'.$p->IDPerson)}}">
-                       <i class="fa fa-trash-o"></i><span> Eliminar</span>
-                   </a>
-               </td>
+            <!--<td>-->
+            <!--       <a href="{{URL::to('deleteAthleteD/'.$p->IDPerson)}}">-->
+            <!--           <i class="fa fa-trash-o"></i><span> Eliminar</span>-->
+            <!--       </a>-->
+            <!--   </td>-->
          </tr>
          @endforeach
       </table>

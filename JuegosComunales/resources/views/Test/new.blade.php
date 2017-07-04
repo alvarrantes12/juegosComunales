@@ -16,7 +16,8 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 
 @section('adminContent')
 
-
+<section>
+      <div class="row">
 <div class="col-md-10 col-md-offset-1 text-center">
     <div class="panel panel-info">
         <div class="panel-heading">
@@ -56,6 +57,8 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         </div>
   </div>
 </div>
+</div>
+</section>
 @endsection
 
 

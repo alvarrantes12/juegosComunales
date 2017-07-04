@@ -14,6 +14,8 @@ Vista que se encarga de crear un formulario con el fin de mostrar los tipos de u
 
 @extends('adminMasterPage')
 @section('adminContent')
+<section>
+      <div class="row">
 <div class="form-group">
 
 
@@ -88,4 +90,6 @@ Vista que se encarga de crear un formulario con el fin de mostrar los tipos de u
          
    </div>
 </div>
+</div>
+</section>
 @endsection

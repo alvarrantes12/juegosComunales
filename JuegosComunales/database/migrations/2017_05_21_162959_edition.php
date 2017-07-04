@@ -19,6 +19,7 @@ class Edition extends Migration
             $table->integer('year');
             $table->date('startDate');
             $table->date('endDate');
+            $table->boolean('active');
             $table->timestamps();
         });
     }

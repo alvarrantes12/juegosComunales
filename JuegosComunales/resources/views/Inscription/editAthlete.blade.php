@@ -12,11 +12,11 @@ I Ciclo, 2017
 Clase: specification
 Vista que se encarga de crear un formulario con el fin de seleccionar el deporte, la categoría y la rama
 específicos con el fin de recolectar parte de los datos de la inscripción de los participantes en el sistema-->
-@extends('adminMasterPage')
+@extends('masterPage')
 
-@section('adminContent')
+@section('content')
 
-<section>
+ <section>
       <div class="row">
 
 <div class="col-md-10 col-md-offset-1 text-center">
@@ -27,12 +27,12 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                <div class="panel-body">
 
 
- <form class="form-horizontal" role="form" method="POST" action="{{ url('editA/') }}">
+ <form class="form-horizontal" role="form" method="POST" action="{{ url('updateAthlete/') }}">
       
  <div class="form-group">
     {!!csrf_field() !!}
     
-     <label for="" class="col-md-4 control-label">Edición</label>
+    <label for="" class="col-md-4 control-label">Edición</label>
        <div class = "col-md-6">
         <select class="form-control" id = "edition" name = "edition" required autofocus>
             <option value="{{$eEdition->IDEdition}}" selected>{{$eEdition->nameEdition}}, {{$eEdition->year}}</option>
@@ -91,7 +91,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         
   <input type="text" class="form-control" id="telephone" name = "telephone"
    value= "{{$eAthlete->telephone}}" style = "display:none;">
-<label for="" class="col-lg-4 control-label">Telefono</label>
+<label for="" class="col-lg-4 control-label">Teléfono</label>
 <div class="col-lg-6">
    <input type="text" class="form-control" id="telephone" name = "telephone" pattern="^[0-9]{1}[\-][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}"  title="Formato incorrecto, Solo 8 digitos son permitidos y con el formato 2-345-67-89" placeholder="2-494-01-02"
       value= "{{$eAthlete->telephone}}">
@@ -99,7 +99,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         
      <input type="text" class="form-control" id="email" name = "email"
    value= "{{$eAthlete->email}}" style = "display:none;">
-<label for="" class="col-lg-4 control-label">Correo electronico</label>
+<label for="" class="col-lg-4 control-label">Correo electrónico</label>
 <div class="col-lg-6">
    <input type="email" class="form-control" id="email" name = "email"
       value= "{{$eAthlete->email}}">
@@ -138,7 +138,6 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 </div>
 </div>
 </section>
-
              
 
 

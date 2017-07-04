@@ -15,7 +15,8 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 @extends('adminMasterPage')
 
 @section('adminContent')
-
+<section>
+      <div class="row">
 
 <div class="col-md-10 col-md-offset-1 text-center">
     <div class="panel panel-info">
@@ -38,7 +39,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                 <label for="" class="col-lg-4 control-label">Categoría a la que pertenece:</label> 
                 <div class="col-lg-6 category">
                     <select class="form-control" id = "category" name = "category" >
-                        <option value="0" selected>{{$test->nameCategory}}</option>
+                        <option value = '{{$test->IDCategory}}' selected>{{$test->nameCategory}}</option>
                           
                     </select>
                 </div>
@@ -59,7 +60,8 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         </div>
   </div>
 </div>
-
+</div>
+</section>
 @endsection
 
 
@@ -71,6 +73,7 @@ $(document).ready(function() {
     $("#sport").change(function() {
         	$("#category ").empty();
 	$.getJSON(('getCategory/')+$("#sport").val(),function(data){
+	    $("#category").append('<option value="0">Seleccione una categoría</option>');
 	    $.each(data, function(id,item){
 		    $("#category").append('<option value="'+item.IDCategory+'">'+item.nameCategory+'</option>');
 	    });

@@ -42,15 +42,35 @@ class sportController extends Controller
     }
      public function insertNewSport(Request $request)
   {
+      
+      $exist = $this-> exist($request->sportName);
+      
+      if(!$exist){
       $sport = new sport;
       $sport->nameSport = $request-> sportName;
       $sport->active = 1;
       $sport->IDSportType = $request-> sportT;
       $sport->athletesAmount = $request-> athleteAmount;
       $sport->save();
+       $request->session()->flash('sport', '¡ Deporte creado correctamente!');
       return $this -> index();
+  }else{
+      $request->session()->flash('sport', '¡Ya existe un deporte con este nombre!'); 
+      return $this -> index ();  
+  }
   }
  
+     public function exist($sportName){
+    if (Sport::where('nameSport', '=', $sportName)->exists()) {
+       return true;
+    }else{
+       return false;
+    }
+  }
+    
+    
+    
+    
     
     public function editSport($IDSport){
          $sport = Sport::join('sportType', 'sport.IDSportType', '=' , 'sportType.IDSportType')
@@ -69,6 +89,7 @@ class sportController extends Controller
         'athletesAmount' => $request->athleteAmount,
         'IDSportType' => $request->sportT]
         ); 
+         $request->session()->flash('sport', '¡ Deporte editado correctamente!');
         return $this->index();
     }
     

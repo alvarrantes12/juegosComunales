@@ -49,26 +49,26 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
     
     
 
-    <label for="" class="col-lg-4 control-label">Límite inicial de fecha de nacimiento:</label>
+    <label for="" class="col-lg-4 control-label">Edad mínima:</label>
     <div class="col-lg-6">
-        <div class='input-group date' id='startDate'>
-            <input pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" title="La fecha debe ser año-mes-dia" value= "{{$eCategory->startDate}}" name = "startDate" type='text' class="form-control" id='datepicker' autocomplete='off' onchange="changeEventHandler(event);"/>
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-        </div>
-        </div>
+             <div class="col-lg-4">
+                <input type="number" class="form-control" name="startAge" id="startAge" value= "{{$eCategory->startAge}}"pattern="[0-9]{2}" title="Solo se permíten números"  required autofocus>
+            </div>
+             <div class="col-lg-2">
+                 <label for="" class="control-label">Años</label>
+                 </div>
+            </div>
         
         
-        <label for="" class="col-md-4 control-label">Fecha límite de fecha de nacimiento:</label>
+        <label for="" class="col-md-4 control-label">Edad máxima:</label>
     <div class="col-lg-6">
-        <div class='input-group date' id='endDate'>
-            <input pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" title="La fecha debe ser año-mes-dia" value= "{{$eCategory->endDate}}" name = "endDate" type='text' class="form-control" id='datepicker2' autocomplete='off' onchange="changeEventHandler(event);"/>
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-        </div>
-        </div>
+            <div class="col-lg-4">
+                <input type="number" class="form-control" name="endAge" id="endAge"  value= "{{$eCategory->endAge}}" pattern="[0-9]{2}" title="Solo se permíten números"  required autofocus>
+            </div>
+            <div class="col-lg-2">
+                <label for="" class="control-label">Años</label>
+                </div>
+            </div>
          <div class="col-lg-6">
       <input type="text" class="form-control" id="IDCategory" name = "IDCategory"
              value="{{$eCategory->IDCategory}}" style = "display:none;">
