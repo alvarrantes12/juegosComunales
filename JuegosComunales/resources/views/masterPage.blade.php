@@ -97,7 +97,7 @@
           <!-- Control Sidebar Toggle Button -->
             <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                  <a href="{{URL::to('editPerfil/')}}" class="btn btn-default btn-flat">Perfil</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{ route('logout') }}"
@@ -138,6 +138,8 @@
             <li><a href="{{URL::to('insertNewPart/')}}"><i class="fa fa-circle-o"></i>Inscribir Participantes</a></li>
           
             <li><a href="{{URL::to('showAthletes/')}}"><i class="fa fa-circle-o"></i>Atletas Inscritos</a></li>
+            
+            <li><a href="{{URL::to('showExtraDel/')}}"><i class="fa fa-circle-o"></i>Personal de Apoyo Inscrito</a></li>
             
           </ul>
         </li>

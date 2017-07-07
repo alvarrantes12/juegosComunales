@@ -16,12 +16,13 @@ use App\athlete;
 use App\role;
 use App\edition;
 use App\User;
+use App\personEdition;
 use Carbon\Carbon;
 use App\sportType;
 use App\bloodType;
-use App\personEdition;
 
-session_start();
+
+
 
 class personController extends Controller
 {
@@ -73,10 +74,11 @@ class personController extends Controller
           $person->active = 1;
           
           if($request->role == 3){
-            $_SESSION['person'] = $person;
-            $_SESSION['IDRole'] =$request->role;
-            $_SESSION['IDCommunity'] = $request->community;
-            $_SESSION['IDEdition'] = $request->IDEdition;
+           session(['person' =>  $person]);
+           session(['IDRole' =>  $request->role]);
+           session(['IDCommunity' =>   $request->community]);
+           session(['IDEdition' =>  $request->IDEdition]);
+           
             $date = $request->birthDate;
             
            return $this-> documents()->with('year',$date);
@@ -160,10 +162,10 @@ class personController extends Controller
           $person->active = 1;
           
           if($request->role == 3){
-            $_SESSION['person'] = $person;
-            $_SESSION['IDRole'] =$request->role;
-            $_SESSION['IDCommunity'] =  session()->get('community');
-            $_SESSION['IDEdition'] = $request->IDEdition;
+            session(['person' =>  $person]);
+           session(['IDRole' =>  $request->role]);
+           session(['IDCommunity' =>  session()->get('community')]);
+           session(['IDEdition' =>  $request->IDEdition]);
             $age = $request->birthDate;
            return $this-> completeAthleteRegister()->with("year",$age);
           }
@@ -183,7 +185,7 @@ class personController extends Controller
    
    public function insertByAthleteDelegate(Request $request)
     {
-       $personS = $_SESSION['person'];
+       $personS = session()->get('person');
        $athlete = new athlete;
        $athlete->IDBloodType = $request->bloodType;
        $athlete->height = $request->height;
@@ -206,14 +208,14 @@ class personController extends Controller
        $person->birthDate = $personS->birthDate;
        $person->telephone = $personS->telephone;
        $person->address = $personS->address;
-       $IDRol = $_SESSION['IDRole'];
-       $IDCommunity = $_SESSION['IDCommunity'];
+       $IDRol =session()->get('IDRole');
+       $IDCommunity = session()->get('IDCommunity');
        $person->IDRole =  $IDRol;
        $person->IDCommunity = $IDCommunity;
        $person->active = 1;
        $personEdition = new personEdition;
        $personEdition->IDPerson = $personS->IDPerson;
-       $personEdition->IDEdition = $_SESSION['IDEdition'];
+       $personEdition->IDEdition = session()->get('IDEdition');
        
         $person->save();
         $athlete->save();
@@ -229,7 +231,13 @@ class personController extends Controller
    public function insertDoc(Request $request)
     {
      
-     $personS = $_SESSION['person'];
+     
+     $request->file('archivo1')->store('public');
+     
+     
+     
+     
+     $personS = session()->get('person');
        $athlete = new athlete;
        $athlete->IDBloodType = $request->bloodType;
        $athlete->height = $request->height;
@@ -253,12 +261,12 @@ class personController extends Controller
        $person->address = $personS->address;
        
             
-       $IDRol = $_SESSION['IDRole'];
-       $IDCommunity = $_SESSION['IDCommunity'];
+       $IDRol = session()->get('IDRole');
+       $IDCommunity = session()->get('IDCommunity');
        $person->IDRole =  $IDRol;
        $person->IDCommunity = $IDCommunity;
        $person->active = 1;
-       $edition = $_SESSION['IDEdition'];
+       $edition =session()->get('IDEdition');
        $personEdition = new personEdition;
        $personEdition->IDPerson = $personS->IDPerson;
        $personEdition->IDEdition = $edition;
@@ -397,7 +405,9 @@ class personController extends Controller
      
       athleteCategory::where('IDPerson' , $IDPerson)->delete();
       athlete::where('IDPerson' , $IDPerson)->delete();
+      personEdition::where('IDPerson' , $IDPerson)->delete();
       person::where('IDPerson' , $IDPerson)->delete();
+      
      return $this-> index(); 
 }
 
@@ -617,6 +627,23 @@ public function showExtra()
         return view('/PersonalExtra/show')
         ->with('person', $person);
     }
+    
+    public function showExtraDel()
+    {
+     $community = session()->get('IDCommunity');
+     $person =  Person::join('community','person.IDCommunity','=','community.IDCommunity')
+         -> join('role','person.IDRole','=','role.IDRole')
+         ->select('person.IDRole', 'person.IDCommunity','person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','person.email','person.telephone','role.role')
+         ->where('person.IDCommunity', '=', $community)
+         ->where('person.IDRole', '!=', 1)
+         ->where('person.IDRole', '!=', 2)
+         ->where('person.IDRole', '!=', 3)
+         
+         ->get();
+         
+        return view('/Inscription/showNoAthletes')
+        ->with('person', $person);
+    }
 
 public function searchExtra(Request $request){
       $all = Person::join('community','person.IDCommunity','=','community.IDCommunity')
@@ -636,14 +663,31 @@ public function searchExtra(Request $request){
        
     }
     
-   
-     public function editExtra (Request $request, $IDPerson){
+    public function searchExtraDel(Request $request){
+      $all = Person::join('community','person.IDCommunity','=','community.IDCommunity')
+         -> join('role','person.IDRole','=','role.IDRole')
+         ->select('person.IDRole','person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','person.email','person.telephone','role.role')
+        ->where('person.IDRole', '!=', 1)
+         ->where('person.IDRole', '!=', 2)
+         ->where('person.IDRole', '!=', 3)
+         -> where ('person.name',$request->filter)
+         -> orWhere('person.lastName1', $request->filter)
+         -> orWhere('person.lastName2', $request->filter)
+         -> orWhere('role.role', $request->filter)
+         -> orWhere('person.IDPerson', $request->filter)
+         ->get();
+            return view('/Inscription/showNoAthletes')
+            ->with('person', $all);
+       
+    }
+    
+     public function editExtraDel (Request $request, $IDPerson){
      $eExtra = Person::join('community','person.IDCommunity','=','community.IDCommunity')
          -> join('role','person.IDRole','=','role.IDRole')
          ->select('person.IDRole','person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','person.email','person.telephone','role.role')
          ->where('person.IDPerson', $IDPerson)->first();
      
-        return view('/PersonalExtra/edit')
+        return view('/Inscription/editNoAthlete')
            ->with ('eExtra', $eExtra);
     }
     
@@ -652,10 +696,63 @@ public function searchExtra(Request $request){
      return $this->showExtra();
             
     }
+    
+     public function editExtraDele (Request $request){
+     person::where('IDPerson', $request->IDPerson)->update(['name' => $request->name,'lastName1' => $request->lastName1,'lastName2' => $request->lastName2, 'birthDate' => $request->birthDate, 'telephone' => $request->telephone, 'email' => $request->email]); 
+     return $this->showExtraDel();
+            
+    }
 
 public function deleteExtra(Request $request, $IDPerson){
       person::where('IDPerson' , $IDPerson)->delete();
      return $this-> showExtra(); 
 }
 
+public function deleteExtraDel(Request $request, $IDPerson){
+      person::where('IDPerson' , $IDPerson)->delete();
+     return $this-> showExtraDel(); 
+}
+
+public function editPerfil (){
+ $IDPerson =  session()->get('key');
+ 
+     $ePerfil = Person:: select('person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','person.email','person.telephone','person.IDRole')
+         ->where('person.IDPerson', $IDPerson)->first();
+       
+       if($ePerfil->IDRole == 1){
+        return view('/Admin/editPerfil')
+           ->with ('ePerfil', $ePerfil);
+       }else{
+         return view('/Delegado/editPerfil')
+           ->with ('ePerfil', $ePerfil);
+        
+       }    
+    }
+    
+    public function editPerfill(Request $request){
+     person::where('IDPerson', $request->IDPerson)->update(['name' => $request->name,'lastName1' => $request->lastName1,'lastName2' => $request->lastName2, 'birthDate' => $request->birthDate, 'telephone' => $request->telephone, 'email' => $request->email]); 
+     if($request->password != ""){
+     user::where('IDPerson', $request->IDPerson)->update(['password' =>  bcrypt($request->password)]);
+     $request->session()->flash('perfil', '¡ Perfil actualizado correctamente!'); 
+     
+     if($request->IDRole == 1){
+     return redirect('/adminMasterPageSlider');
+     }else{
+      return redirect('/masterPageSlider');
+     }
+     
+     }else{
+     $request->session()->flash('perfil', '¡ Perfil actualizado correctamente!'); 
+     
+     
+     if($request->IDRole == 1){
+     return redirect('/adminMasterPageSlider');
+     }else{
+      return redirect('/masterPageSlider');
+     }
+     
+     
+     }  
+    }
+    
 }

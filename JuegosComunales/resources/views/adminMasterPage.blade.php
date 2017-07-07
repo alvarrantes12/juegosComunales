@@ -43,10 +43,21 @@
 </head>
 <body class="hold-transition skin-green sidebar-mini">
 <!-- Site wrapper -->
+
+ @if (Session::has('perfil'))
+             <div align = "center">
+             <div class="alert alert-success">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('perfil')}}</div></div>
+            @endif
+
+
 <div class="wrapper">
 
   <header class="main-header">
     <!-- Logo -->
+    
+    
     <a href="adminMasterPageSlider" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>J</b>C</span>
@@ -56,6 +67,8 @@
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
+      
+      
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
@@ -71,6 +84,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
              
               <span class="glyphicon glyphicon-user"></span><span class="hidden-xs">{{session()->get('role')}}</span>
+              
             </a>
             
             <ul class="dropdown-menu">
@@ -95,10 +109,11 @@
                 </p>
               </li>
              
+             
           <!-- Control Sidebar Toggle Button -->
             <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                  <a href="{{URL::to('editPerfil/')}}" class="btn btn-default btn-flat">Perfil</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{ route('logout') }}"
@@ -108,6 +123,7 @@
                         {{ csrf_field() }}
                      </form>
                 </div>
+              
               </li>
         </ul>
       </div>
@@ -156,12 +172,18 @@
           </li>
 
         <li class="treeview">
-          <a href="{{URL::to('report/')}}">
-            <i class="glyphicon glyphicon-file"></i> <span>Reporte</span>
+          <a href="#">
+            <i class="glyphicon glyphicon-file"></i> <span>Reportes</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+           <ul class="treeview-menu">
+            <li><a href="{{URL::to('reportCommunity/')}}"><i class="fa fa-circle-o"></i>Reportes por comunidad.</a></li>
+            <li><a href="{{URL::to('reportSport/')}}"><i class="fa fa-circle-o"></i>Reportes por deporte.</a></li>
+            <li><a href="{{URL::to('reportCategory/')}}"><i class="fa fa-circle-o"></i>Reportes por categoría.</a></li>
+            <li><a href="{{URL::to('reportEdition/')}}"><i class="fa fa-circle-o"></i>Reporte por edición.</a></li>
+          </ul>
           </li>
             
         <!--   <li class="treeview">-->

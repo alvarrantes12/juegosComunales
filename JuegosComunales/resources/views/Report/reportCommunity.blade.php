@@ -131,30 +131,12 @@ tr:nth-child(even) {
                 
                    
                      
-                  <h3  align="center">Reporte por categoría </h3>
-                   <h3  align="center">Edición <?=  $edition; ?> </h3>
-                  <table class="table  text-left">
-                 <td>
-                <br>
+                  <h3  align="center">Todos los atletas registrados en la comunidad de  <?=  $community; ?> </h3>
+                 <h3  align="center">Edición <?=  $edition; ?> </h3>
+                  <br>
+                  
                    <h3  class="box-title">Fecha: <?=  $date; ?></h3>
-                   <br>
-                   </td>
-                   <td>
-                   <br>
-                  <h3  class="box-title">Deporte: <?=  $sport; ?></h3>
-                   <br>
-                   </td>
-                    <td>
-                   <br>
-                  <h3  class="box-title">Categoría: <?=  $category1; ?></h3>
-                   <br>
-                   </td>
-                    <td>
-                     <br>
-                  <h3  class="box-title">Comunidad: <?=  $community1; ?></h3>
-                   <br>
-                   </td>
-                    
+                  
                   
                 </div><!-- /.box-header -->
                 <div class="box-body">
@@ -166,6 +148,9 @@ tr:nth-child(even) {
                        <th>1er Apellido</th>
                         <th>2do Apellido</th>
                          <th>Rama</th>
+                          <th>Deporte</th>
+                         <th>Categoría</th>
+                         
                         
                       
                      </tr>
@@ -185,7 +170,8 @@ tr:nth-child(even) {
                         <td>Masculino</td>
                          <?php  } ?>
                     
-                      
+                      <td><?= $c->nameSport; ?></td>
+                      <td><?= $c->nameCategory; ?></td>
                     </tr>
                     
                     <?php  } ?>

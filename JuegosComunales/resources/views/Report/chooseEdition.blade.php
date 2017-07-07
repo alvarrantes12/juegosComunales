@@ -22,7 +22,7 @@ Vista que se encarga de crear un formulario con el fin crear un nuevo canton en 
                </div>
                <div class="panel-body">
 
-    <form class="form-horizontal" role="form" method="POST" target="_blank" action="{{ url('generatePDF/') }}">
+    <form class="form-horizontal" role="form" method="POST" target="_blank" action="{{ url('generateEditionPDF/') }}">
       
         <div class="form-group">
             {!!csrf_field() !!}
@@ -35,38 +35,7 @@ Vista que se encarga de crear un formulario con el fin crear un nuevo canton en 
                         @endforeach
                    </select>
             </div>
-            <label for="" class="col-lg-4 control-label">Seleccione el distrito</label>
-            <div class="col-lg-6">
-                 <select  class="form-control" id = "district" name = "district" required autofocus>
-                    <option value="" selected>Seleccione un distrito</option>
-                        @foreach ($district as $d)
-                            <option  value ='{{$d->IDDistrict}}'>{{$d->nameDistrict}}</option>
-                        @endforeach
-                   </select>
-            </div>
-                     <label for="" class="col-lg-4 control-label">Seleccione la comunidad:</label> 
-                <div class="col-lg-6 category">
-                    <select class="form-control" id = "community" name = "community" required autofocus>
-                        <option value="" selected>Debe seleccionar un distrito primero</option>
-                    </select>
-                </div>
-                
-                 <label for="" class="col-lg-4 control-label">Seleccione el deporte</label>
-            <div class="col-lg-6">
-                 <select  class="form-control" id = "sport" name = "sport" required autofocus>
-                    <option value="" selected>Seleccione un deporte</option>
-                        @foreach ($sport as $s)
-                            <option  value ='{{$s->IDSport}}'>{{$s->nameSport}}</option>
-                        @endforeach
-                   </select>
-            </div>
-                     <label for="" class="col-lg-4 control-label">Seleccione la categoría:</label> 
-                <div class="col-lg-6 category">
-                    <select class="form-control" id = "category" name = "category" required autofocus>
-                        <option value="" selected>Debe seleccionar un deporte primero</option>
-                    </select>
-                </div>
-                
+                     
         </div>
         
             <div class="col-lg-offset-8 col-lg-4">

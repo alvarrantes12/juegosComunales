@@ -34,7 +34,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
   </div>
   <div class="panel-body">
       
-  <form class="form-horizontal" role="form" method='POST' id="newPS" name="newPS" action="{{ url('insertDoc/') }}">
+  <form class="form-horizontal" role="form" method='POST' id="newPS" name="newPS" action="{{ url('insertDoc/') }}"  enctype="multipart/form-data">
   {{ csrf_field() }} 
                  
  <div  >
@@ -123,15 +123,21 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
   </div>
   <div class="panel-body">
     
+    
+    
+    
     <section class="col-md-12">
     <div class="col-md-3">
         <label for="adj">Fotografia (imagen)</label>
         </div>
         
     <div class="col-md-4">
-    <input type="file" id="archivo1">
+    <input type="file" id="archivo1" name="archivo1">
         </div>
     </section>
+    
+    
+    
     
     <section class="col-md-12">
     <div class="col-md-3">
@@ -153,15 +159,6 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         </div>
     </section>
      
-     <section class="col-md-12">
-    <div class="col-md-3">
-        <label for="adj">Boleta de inscripcion (pdf)</label>
-        </div>
-        
-    <div class="col-md-4">
-    <input type="file" id="archivo4">
-        </div>
-    </section>
     
   </div>
 </div>

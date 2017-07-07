@@ -78,7 +78,9 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
             <th></th>
          </thead>
           @if(count($person) < 1)
-                <td>No existen coincidencias para su búsqueda</td>
+                 <div class="col-md-12">
+                <td>No hay datos para mostrar</td>
+            </div>
                @endif
          @foreach ($person as $p)
          

@@ -72,7 +72,9 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                      <th></th>
                   </thead>
                    @if(count($category) < 1)
-                <td>No existen coincidencias para su búsqueda</td>
+                 <div class="col-md-12">
+                <td>No hay datos para mostrar</td>
+            </div>
                @endif
                   @foreach ($category as $c)
                   <tr>

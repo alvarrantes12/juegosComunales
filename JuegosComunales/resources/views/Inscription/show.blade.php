@@ -55,20 +55,22 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
    <div class="table-responsive text-center">
       <table class="table table-hover table-striped text-center">
          <thead>
-            <th>Numero de identificación</th>
+            <th>Número de identificación</th>
             <th>Nombre del atleta</th>
             <th>Primer Apellido</th>
             <th>Segundo Apellido</th>
             <th>Fecha de nacimiento</th>
             <th>Comunidad</th>
             <th>Deporte</th>
-            <th>Categoria</th>
+            <th>Categoría</th>
            
          <th></th>
             <th></th>
          </thead>
           @if(count($person)<1)
-             <td>No hay resultados para la búsqueda realizada</td>
+              <div class="col-md-12">
+                <td>No hay datos para mostrar</td>
+            </div>
              @endif
          @foreach ($person as $p)
          
@@ -90,11 +92,11 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
                  
              </a>
             </td>
-            <!--<td>-->
-            <!--       <a href="{{URL::to('deleteAthleteD/'.$p->IDPerson)}}">-->
-            <!--           <i class="fa fa-trash-o"></i><span> Eliminar</span>-->
-            <!--       </a>-->
-            <!--   </td>-->
+             <td>
+                 <a href="{{URL::to('deleteAthleteD/'.$p->IDPerson)}}">
+                       <i class="fa fa-trash-o"></i><span> Eliminar</span>
+                  </a>
+              </td>
          </tr>
          @endforeach
       </table>

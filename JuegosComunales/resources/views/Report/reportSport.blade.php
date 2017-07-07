@@ -131,30 +131,12 @@ tr:nth-child(even) {
                 
                    
                      
-                  <h3  align="center">Reporte por categoría </h3>
+                  <h3  align="center">Todos los atletas registrados en  <?=  $sport1; ?> </h3>
                    <h3  align="center">Edición <?=  $edition; ?> </h3>
-                  <table class="table  text-left">
-                 <td>
-                <br>
+                  <br>
+                  
                    <h3  class="box-title">Fecha: <?=  $date; ?></h3>
-                   <br>
-                   </td>
-                   <td>
-                   <br>
-                  <h3  class="box-title">Deporte: <?=  $sport; ?></h3>
-                   <br>
-                   </td>
-                    <td>
-                   <br>
-                  <h3  class="box-title">Categoría: <?=  $category1; ?></h3>
-                   <br>
-                   </td>
-                    <td>
-                     <br>
-                  <h3  class="box-title">Comunidad: <?=  $community1; ?></h3>
-                   <br>
-                   </td>
-                    
+                  
                   
                 </div><!-- /.box-header -->
                 <div class="box-body">

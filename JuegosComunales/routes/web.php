@@ -126,8 +126,14 @@ Route::get('/showU','userController@showUser');
 Route::get('/upRol','roleController@updateRole');
 
 //Rutas que se encargan de la generación de reportes
-Route::get('/report', 'ReportController@index');
+Route::get('/reportCategory', 'ReportController@index');
+Route::get('/reportEdition', 'ReportController@indexEdition');
+Route::get('/reportSport', 'ReportController@indexSport');
+Route::get('/reportCommunity', 'ReportController@indexCommunity');
 Route::post('/generatePDF','ReportController@generate');
+Route::post('/generateSportPDF','ReportController@generateSport');
+Route::post('/generateCommunityPDF','ReportController@generateCommunity');
+Route::post('/generateEditionPDF','ReportController@generateEdition');
 Route::get('/reportDel', 'ReportController@indexDelegate');
 Route::post('/reportPDF','ReportController@generateReport');
 
@@ -176,6 +182,16 @@ Route::post('/searchAdmin', 'personController@searchAdministrador');
 Route::get('/deleteAdmin/{IDPerson}', 'personController@deleteAdmin');
 Route::get('/editAdmin/{IDPerson}', 'personController@editAdmin');
 Route::post('/editAdminS', 'personController@editAdministrador');
+
+Route::get('/editPerfil/', 'personController@editPerfil');
+Route::post('/editPe', 'personController@editPerfill');
+
+//Rutas personal de Apoyo delegado
+Route::get('/showExtraDel', 'personController@showExtraDel');
+Route::post('/searchExtraDel', 'personController@searchExtraDel');
+Route::get('/editExtraDel/{IDPerson}', 'personController@editExtraDel');
+Route::post('/editExtraDele', 'personController@editExtraDele');
+Route::get('/deleteExtra/{IDPerson}', 'personController@deleteExtraDel');
 
 //Rutas Personal de apoyo.
 Route::get('/showExtra', 'personController@showExtra');

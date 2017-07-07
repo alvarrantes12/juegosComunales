@@ -58,7 +58,9 @@
                 <th></th>
             </thead>
              @if(count($district) < 1)
-                <td>No existen coincidencias para su búsqueda</td>
+             <div class="col-md-12">
+                <td>No hay datos para mostrar</td>
+            </div>
                @endif
             @foreach($district as $p)
             <tr>
