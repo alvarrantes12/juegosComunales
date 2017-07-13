@@ -31,27 +31,27 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 
     {!!csrf_field() !!}
     <div>
-        <label for="" class="col-lg-4 control-label">Numero de identificación</label>
+        <label for="" class="col-lg-4 control-label">Número de identificación</label>
         <div class="col-lg-6">
-            <input type="text"  class="form-control" name="IDPerson" id="IDPerson" placeholder="" pattern="^[\s\S]{0,191}$" required autofocus>
+            <input type="text"  class="form-control" name="IDPerson" id="IDPerson" placeholder="Ej.201230123" pattern="^[\s\S]{0,191}$" required autofocus>
         </div>
     </div>
     <div>
         <label for="" class="col-lg-4 control-label">Nombre</label>
             <div class="col-lg-6">
-                <input type="text" class="form-control" name="name" id="name" placeholder="" pattern="^[\s\S]{0,25}$" title="Maximo 25 letras"  required autofocus>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Ej. Juan" pattern="^[\s\S]{0,25}$" title="Maximo 25 letras"  required autofocus>
             </div>
             </div>
     <div>
         <label for="" class="col-lg-4 control-label">Primer Apellido</label>
         <div class="col-lg-6">
-            <input type="text" class="form-control"  name="lastName1" id="lastName1" placeholder="" pattern="^[\s\S]{0,12}$" title="Maximo 12 letras" required autofocus>
+            <input type="text" class="form-control"  name="lastName1" id="lastName1" placeholder="Ej. Pérez" pattern="^[\s\S]{0,12}$" title="Maximo 12 letras" required autofocus>
         </div>
     </div>
     <div>
    <label for="" class="col-lg-4 control-label">Segundo Apellido</label>
    <div class="col-lg-6">
-      <input type="text" class="form-control" name="lastName2" id="lastName2" placeholder="" pattern="^[\s\S]{0,12}$" title="Maximo 12 letras" required autofocus>
+      <input type="text" class="form-control" name="lastName2" id="lastName2" placeholder="Ej. Pérez" pattern="^[\s\S]{0,12}$" title="Maximo 12 letras" required autofocus>
    </div>
 </div>
 <div>
@@ -76,7 +76,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                      </div>
                   </div>
                   <div  >
-                     <label for="" class="col-lg-4 control-label">Correo electronico</label>
+                     <label for="" class="col-lg-4 control-label">Correo electrónico</label>
                      <div class="col-lg-6">
                         <input type="email" class="form-control" name="email" id="email"
                            placeholder="xxx@yyy.zzz"  required autofocus>
@@ -84,7 +84,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                   </div>
                   
                    <div  >
-                     <label for="" class="col-lg-4 control-label">Numero Telefonico</label>
+                     <label for="" class="col-lg-4 control-label">Número Telefónico</label>
                      <div class="col-lg-6">
                         <input type="text"  class="form-control" name="telephone" id="telephone" pattern="^[0-9]{1}[\-][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}" title="Formato incorrecto, Solo 8 digitos son permitidos y con el formato 2-345-67-89" placeholder="2-494-01-02"  required autofocus>
                      </div>

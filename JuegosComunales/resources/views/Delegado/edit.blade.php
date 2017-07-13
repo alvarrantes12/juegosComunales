@@ -26,7 +26,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                <div class="panel-body">
 
 
- <form class="form-horizontal" role="form" method="POST" action="{{ url('editA/') }}">
+ <form class="form-horizontal" role="form" method="POST" action="{{ url('editDel/') }}">
       
  <div class="form-group">
     {!!csrf_field() !!}

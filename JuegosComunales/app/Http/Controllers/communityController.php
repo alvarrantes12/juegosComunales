@@ -34,7 +34,7 @@ class communityController extends Controller
     {
         $all = community::join('communityDistrict', 'community.IDCommunity', '=' , 'communityDistrict.IDCommunity')
                     -> join('district', 'communityDistrict.IDDistrict', '=', 'district.IDDistrict')
-                     ->select('community.nameCommunity', 'district.nameDistrict', 'community.IDCommunity')
+                     ->select('community.nameCommunity', 'district.nameDistrict', 'community.IDCommunity', 'community.active')
                       ->get();
         return view('/Community/show')
         ->with('community', $all);
@@ -54,11 +54,11 @@ class communityController extends Controller
         $community->active = 1;
         $community->save();
         $this-> relateDistrict($request->community, $request->district);
-        $request->session()->flash('community', '¡ Comunidad creada correctamente!');
+        $request->session()->flash('comm', '¡ Comunidad creada correctamente!');
         return $this->index();
       }else{
-      $request->session()->flash('community', '¡Ya existe una comunidad con este nombre!'); 
-      return $this -> index ();  
+      $request->session()->flash('comm', '¡Ya existe una comunidad con este nombre!'); 
+      return $this -> add ();  
   }
      
      
@@ -79,23 +79,15 @@ class communityController extends Controller
       return $exist;
   }
   
-  
-  public function delete(Request $request, $IDCommunity){
-     
-      communityDistrict::where('IDCommunity' , $IDCommunity)->delete();
-      community::where('IDCommunity', $IDCommunity)->delete();
-      
-    return $this->index();
-}
 
- public function edit(Request $request, $IDCommunity){
+ public function edit( $IDCommunity){
          $community = community::join('communityDistrict', 'community.IDCommunity', '=' , 'communityDistrict.IDCommunity')
                     -> join('district', 'communityDistrict.IDDistrict', '=', 'district.IDDistrict')
                      ->select('community.nameCommunity', 'district.nameDistrict', 'communityDistrict.IDDistrict', 'community.IDCommunity')->where('community.IDCommunity', $IDCommunity)
                       ->first();
             $district = District::all();
-            $request->session()->flash('community', '¡ Comunidad editada correctamente!');
-        return view('/Community/edit')
+            
+            return view('/Community/edit')
             ->with ('Community', $community)->with ('district', $district);
             
     }
@@ -103,7 +95,7 @@ class communityController extends Controller
     public function editCommunity(Request $request){
      community::where('IDCommunity', $request->idCommunity)->update(['nameCommunity' => $request->community]); 
       communityDistrict::where('IDCommunity', $request->idCommunity)->update(['IDDistrict' => $request->district]); 
-   
+    $request->session()->flash('comm', '¡ Comunidad editada correctamente!');
         return $this->index();
             
     }
@@ -123,7 +115,7 @@ class communityController extends Controller
    public function getCommunity ($district){
        $community = community::join('communityDistrict', 'community.IDCommunity', '=', 'communityDistrict.IDCommunity')
        ->join ('district','communityDistrict.IDDistrict','=','district.IDDistrict')
-         ->select('community.IDCommunity', 'community.nameCommunity')->where('district.IDDistrict', $district)->get();
+         ->select('community.IDCommunity', 'community.nameCommunity', 'community.active')->where('district.IDDistrict', $district)->get();
          
          return  $community;
        
@@ -137,7 +129,7 @@ class communityController extends Controller
     }
   }
    
-  public function deleteC($IDCommunity){
+  public function delete($IDCommunity){
       if($this->active($IDCommunity)){
         community::where('IDCommunity', $IDCommunity)
           ->update(['active' => 0]);
@@ -149,8 +141,8 @@ class communityController extends Controller
     }} 
     
     private function active($IDCommunity){
-       $cat = community::select('active')->where('IDCommunity', $IDCommunity)->get();
-       $c = $cat[0]->active;
+       $com = community::select('active')->where('IDCommunity', $IDCommunity)->get();
+       $c = $com[0]->active;
        if($c == 0){
            return false;
        }else{
@@ -158,7 +150,6 @@ class communityController extends Controller
        }
         
     }  
-   
    
    
    

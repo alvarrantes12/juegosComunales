@@ -16,12 +16,15 @@ use App\athlete;
 use App\role;
 use App\edition;
 use App\User;
+use App\AthleteImg;
 use App\personEdition;
 use Carbon\Carbon;
 use App\sportType;
 use App\bloodType;
+use App\personTest;
+use Illuminate\Support\Facades\Storage;
 
-
+use File;
 
 
 class personController extends Controller
@@ -178,21 +181,23 @@ class personController extends Controller
             return $this-> insertPart();
           }
        }else{
-       $request->session()->flash('person', '¡Ya existe un usuario con la identificación '+ $request->IDPerson +'!');
+       $request->session()->flash('person', '¡Ya existe un usuario con la identificación '.$request->IDPerson .'!');
        return $this-> insertPart();
      }
    }
    
    public function insertByAthleteDelegate(Request $request)
     {
-       $personS = session()->get('person');
+      $personS = session()->get('person');
+      
+      
        $athlete = new athlete;
        $athlete->IDBloodType = $request->bloodType;
        $athlete->height = $request->height;
        $athlete->weight = $request->weight; 
        $athlete->IDPerson = $personS->IDPerson;
        $athlete->IDStatus = 1;
-      
+       
        $athleteCategory = new athleteCategory;
        $athleteCategory->IDCategory = $request->category;
        $athleteCategory->IDPerson = $personS->IDPerson;
@@ -206,38 +211,96 @@ class personController extends Controller
        $person->email = $personS->email;
        $person->gender = $personS->gender;
        $person->birthDate = $personS->birthDate;
-       $person->telephone = $personS->telephone;
        $person->address = $personS->address;
-       $IDRol =session()->get('IDRole');
-       $IDCommunity = session()->get('IDCommunity');
+       
+            
+       $IDRol = session()->get('IDRole');
+       $IDCommunity = session()->get('community');
        $person->IDRole =  $IDRol;
        $person->IDCommunity = $IDCommunity;
        $person->active = 1;
+       $edition =session()->get('IDEdition');
        $personEdition = new personEdition;
        $personEdition->IDPerson = $personS->IDPerson;
-       $personEdition->IDEdition = session()->get('IDEdition');
+       $personEdition->IDEdition = $edition;
        
-        $person->save();
-        $athlete->save();
-        $athleteCategory->save();
-        $personEdition->save();
+       $person->save();
+       $athlete->save();
+       $athleteCategory->save();
+       $personEdition->save();
+       if ($request->test != null){
+        $personTest = new personTest;
+       $personTest->IDPerson = $personS->IDPerson;
+       $personTest->IDTest = $request->test;
+       $personTest ->save();
+       }
+
+        $athleteImg = new AthleteImg;
+       $athleteImg->IDPerson = $personS->IDPerson;
+         $file1 = $request->file('f1');
+           if ($file1 != null ){
+       $mime = $request->file('f1')->getMimeType();
+       if($mime == "image/jpeg" || $mime == "image/jpg" || $mime == "image/png"){
+      $fileName1 = $personS->IDPerson . '_' ."fotoPasaporte". '_'. $file1->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName1,  File::get($file1));
+     $athleteImg->imgPasaport = $fileName1;
+     $athleteImg->save();
+  
+     }else{
+        $request->session()->flash('errorI', '¡ Formato de imagen incorrecto! ');
+        return $this->documents()->with('year', $request->year);
+     }
+      }
+     
+     $file2 = $request->file('f2');
+     
+      if ($file2 != null){
+       $mime2 = $request->file('f2')->getMimeType();
+       if ( $mime2 == "image/jpeg" || $mime2 == "image/jpg" || $mime2 == "image/png"){
+       
+      $fileName2 = $personS->IDPerson . '_' ."cedFrente". '_'. $file2->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName2,  File::get($file2));
+     $athleteImg->	imgCF = $fileName2;
+     $athleteImg->save();
+     
+     }else{
+      $request->session()->flash('errorI', '¡ Formato de imagen incorrecto! ');
+      return $this->documents()->with('year', $request->year);
+     }
+      }
+     
+      $file3 = $request->file('f3');
+    
+     
+      if ($file3 != null){
+       $mime3 = $request->file('f3')->getMimeType();
+       if ($mime3 == "image/jpeg" || $mime3 == "image/jpg" || $mime3 == "image/png"){
+        
+      $fileName3 = $personS->IDPerson . '_' ."cedAtrás". '_'. $file3->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName3,  File::get($file3));
+     $athleteImg->imgCA = $fileName3;
+     $athleteImg->save();
+     
+     }else{
+      $request->session()->flash('errorI', '¡ Formato de imagen incorrecto! ');
+      return $this->documents()->with('year', $request->year);
+     }
+      }
+        $request->session()->flash('athlete', '¡Atleta inscrito correctamente!');
+       
+        
         return $this-> indexDelegate();
     }
-   
+  
   
    /**
      * Insercion de atletas
      */
    public function insertDoc(Request $request)
     {
-     
-     
-     $request->file('archivo1')->store('public');
-     
-     
-     
-     
      $personS = session()->get('person');
+      
+      
        $athlete = new athlete;
        $athlete->IDBloodType = $request->bloodType;
        $athlete->height = $request->height;
@@ -270,11 +333,72 @@ class personController extends Controller
        $personEdition = new personEdition;
        $personEdition->IDPerson = $personS->IDPerson;
        $personEdition->IDEdition = $edition;
-            
-        $person->save();
-        $athlete->save();
-        $athleteCategory->save();
-        $personEdition->save();
+       
+       $person->save();
+       $athlete->save();
+       $athleteCategory->save();
+       $personEdition->save();
+       if ($request->test != null){
+        $personTest = new personTest;
+       $personTest->IDPerson = $personS->IDPerson;
+       $personTest->IDTest = $request->test;
+       $personTest ->save();
+       }
+
+        $athleteImg = new AthleteImg;
+       $athleteImg->IDPerson = $personS->IDPerson;
+    
+       
+     $file1 = $request->file('f1');
+     
+      if ($file1 != null ){
+       $mime = $request->file('f1')->getMimeType();
+       if($mime == "image/jpeg" || $mime == "image/jpg" || $mime == "image/png"){
+      $fileName1 = $personS->IDPerson . '_' ."fotoPasaporte". '_'. $file1->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName1,  File::get($file1));
+     $athleteImg->imgPasaport = $fileName1;
+     $athleteImg->save();
+    
+     }else{
+        $request->session()->flash('errorI', '¡ Formato de imagen incorrecto! ');
+        return $this->documents()->with('year', $request->year);
+     }
+      }
+     
+     $file2 = $request->file('f2');
+     
+      if ($file2 != null){
+       $mime2 = $request->file('f2')->getMimeType();
+       if ( $mime2 == "image/jpeg" || $mime2 == "image/jpg" || $mime2 == "image/png"){
+       
+      $fileName2 = $personS->IDPerson . '_' ."cedFrente". '_'. $file2->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName2,  File::get($file2));
+     $athleteImg->	imgCF = $fileName2;
+     $athleteImg->save();
+     
+     }else{
+      $request->session()->flash('errorI', '¡ Formato de imagen incorrecto! ');
+      return $this->documents()->with('year', $request->year);
+     }
+      }
+     
+      $file3 = $request->file('f3');
+    
+     
+      if ($file3 != null){
+       $mime3 = $request->file('f3')->getMimeType();
+       if ($mime3 == "image/jpeg" || $mime3 == "image/jpg" || $mime3 == "image/png"){
+        
+      $fileName3 = $personS->IDPerson . '_' ."cedAtrás". '_'. $file3->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName3,  File::get($file3));
+     $athleteImg->imgCA = $fileName3;
+     $athleteImg->save();
+     
+     }else{
+      $request->session()->flash('errorI', '¡ Formato de imagen incorrecto! ');
+      return $this->documents()->with('year', $request->year);
+     }
+      }
         $request->session()->flash('athlete', '¡Atleta inscrito correctamente!');
         return $this-> index();
     }
@@ -322,27 +446,31 @@ class personController extends Controller
            -> join('athleteCategory','category.IDCategory','=','athleteCategory.IDCategory')
            -> join('person','athleteCategory.IDPerson','=','person.IDPerson')
            -> join('community','person.IDCommunity','=','community.IDCommunity')
+           -> leftjoin('AthleteImg','person.IDPerson','=','AthleteImg.IDPerson')
         
-         ->select('person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','category.nameCategory','sport.nameSport')
+         ->select('person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','category.nameCategory','sport.nameSport', 'AthleteImg.imgPasaport')
          ->get();
-         
+
         return view('/Athlete/show')
-        ->with('person', $person);
+        ->with('person', $person) ;
+        
     }
-    
-    
-     
     
     public function indexDelegate()
     {
+     $community = session()->get('community');
      $person =  sport::join ('categorySport','sport.IDSport','=','categorySport.IDSport')
            -> join('category','categorySport.IDCategory','=','category.IDCategory')
            -> join('athleteCategory','category.IDCategory','=','athleteCategory.IDCategory')
            -> join('person','athleteCategory.IDPerson','=','person.IDPerson')
            -> join('community','person.IDCommunity','=','community.IDCommunity')
+           -> leftjoin('AthleteImg','person.IDPerson','=','AthleteImg.IDPerson')
         
-         ->select('person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','category.nameCategory','sport.nameSport')
+         ->select('person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.IDCommunity','community.nameCommunity','category.nameCategory','sport.nameSport', 'AthleteImg.imgPasaport')
+         ->where ('community.IDCommunity',$community)
          ->get();
+        
+         
          
         return view('/Inscription/show')
         ->with('person', $person);
@@ -374,7 +502,10 @@ class personController extends Controller
          -> join('category','athleteCategory.IDCategory','=','category.IDCategory')
          -> join('categorySport','category.IDCategory','=','categorySport.IDCategory')
          -> join('sport','categorySport.IDSport','=','sport.IDSport')
-         ->select('person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','category.nameCategory','sport.nameSport')
+         -> leftjoin('AthleteImg','person.IDPerson','=','AthleteImg.IDPerson')
+        
+         ->select('person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','category.nameCategory','sport.nameSport', 'AthleteImg.imgPasaport')
+         
          -> where ('person.name',$request->filter)
          -> orWhere('person.lastName1', $request->filter)
          -> orWhere('person.lastName2', $request->filter)
@@ -391,7 +522,10 @@ class personController extends Controller
          -> join('category','athleteCategory.IDCategory','=','category.IDCategory')
          -> join('categorySport','category.IDCategory','=','categorySport.IDCategory')
          -> join('sport','categorySport.IDSport','=','sport.IDSport')
-         ->select('person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','category.nameCategory','sport.nameSport')
+        -> leftjoin('AthleteImg','person.IDPerson','=','AthleteImg.IDPerson')
+        
+         ->select('person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','category.nameCategory','sport.nameSport', 'AthleteImg.imgPasaport')
+        
          -> where ('person.name',$request->filter)
          -> orWhere('person.lastName1', $request->filter)
          -> orWhere('person.lastName2', $request->filter)
@@ -402,19 +536,22 @@ class personController extends Controller
        
     }
     public function delete(Request $request, $IDPerson){
-     
+      personEdition::where('IDPerson' , $IDPerson)->delete();
+       personTest::where('IDPerson' , $IDPerson)->delete();
       athleteCategory::where('IDPerson' , $IDPerson)->delete();
       athlete::where('IDPerson' , $IDPerson)->delete();
-      personEdition::where('IDPerson' , $IDPerson)->delete();
+       AthleteImg::where('IDPerson' , $IDPerson)->delete();
       person::where('IDPerson' , $IDPerson)->delete();
       
      return $this-> index(); 
 }
 
 public function deleteByDelegate (Request $request, $IDPerson){
-     
+      personEdition::where('IDPerson' , $IDPerson)->delete();
+       personTest::where('IDPerson' , $IDPerson)->delete();
       athleteCategory::where('IDPerson' , $IDPerson)->delete();
       athlete::where('IDPerson' , $IDPerson)->delete();
+      AthleteImg::where('IDPerson' , $IDPerson)->delete();
       person::where('IDPerson' , $IDPerson)->delete();
      return $this-> indexDelegate(); 
 }
@@ -423,7 +560,7 @@ public function deleteByDelegate (Request $request, $IDPerson){
        return view('/Admin/edit');
     }
    
-    public function editAthleteByDelegate (Request $request, $IDPerson){
+    public function editAthleteByDelegate ($IDPerson){
      
      $eAthlete = person::join ('athlete','person.IDPerson','=','athlete.IDPerson')
          ->select('person.email','person.telephone','person.IDPerson','person.name','person.lastName1','person.lastName2','person.birthDate','athlete.weight', 'athlete.height','person.IDCommunity')
@@ -438,7 +575,7 @@ public function deleteByDelegate (Request $request, $IDPerson){
            ->with ('eEdition', $edition);
     }
     
-     public function eAthlete (Request $request, $IDPerson){
+     public function eAthlete ($IDPerson){
      
      $eAthlete = person::join ('athlete','person.IDPerson','=','athlete.IDPerson')
          ->select('person.email','person.telephone','person.IDPerson','person.name','person.lastName1','person.lastName2','person.birthDate','athlete.weight', 'athlete.height','person.IDCommunity')
@@ -454,43 +591,269 @@ public function deleteByDelegate (Request $request, $IDPerson){
     }
     
     public function editA(Request $request){
+   
+     
      person::where('IDPerson', $request->IDPerson)->update(['name' => $request->name,'lastName1' => $request->lastName1,'lastName2' => $request->lastName2, 'birthDate' => $request->birthDate, 'telephone' => $request->telephone, 'email' => $request->email]); 
-      athlete::where('IDPerson', $request->IDPerson)->update(['height' => $request->height,'weight' => $request->weight ]); 
-      $IDPerson = $request->IDPerson;
-      $IDEdition = $request->edition;
+     athlete::where('IDPerson', $request->IDPerson)->update(['height' => $request->height,'weight' => $request->weight ]); 
       
-      if (!$this->existPersonEdition ($IDPerson, $IDEdition)){
-       $personEdition = new personEdition;
-      $personEdition->IDPerson = $IDPerson;
-      $personEdition->IDEdition = $IDEdition;
-      $personEdition->save();
-        return $this->index();
-      }else if ($this->existPersonEdition ($IDPerson, $IDEdition)){
-        return $this->index();
-      }
+      if(!$this->existImg($request->IDPerson)){
+        $athleteImg = new AthleteImg;
+        $athleteImg->IDPerson = $request->IDPerson;
        
+        $file1 = $request->file('f1');
+     
+       if ($file1 != null ){
+        $mime = $request->file('f1')->getMimeType();
+        
+        if($mime == "image/jpeg"|| $mime == "image/jpg" || $mime == "image/png"){
+        $fileName1 = $request->IDPerson . '_' ."fotoPasaporte". '_'. $file1->getClientOriginalName(); 
+        Storage::disk('photos')->put($fileName1,  File::get($file1));
+     $athleteImg->imgPasaport = $fileName1;
+     
+      
+       }else{
+        $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+        return $this->eAthlete($request->IDPerson);
+     }
+       }
+     
+     
+     $file2 = $request->file('f2');
+     
+      if ($file2 != null){
+       $mime2 = $request->file('f2')->getMimeType();
+       
+       if ( $mime2 == "image/jpeg" || $mime2 == "image/jpg" || $mime2 == "image/png"){
+       
+      $fileName2 = $request->IDPerson . '_' ."cedFrente". '_'. $file2->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName2,  File::get($file2));
+     $athleteImg->	imgCF = $fileName2;
+     
+     }else{
+      $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+      return $this->eAthlete($request->IDPerson);
+     }
+      }
+     
+      $file3 = $request->file('f3');
+    
+     
+      if ($file3 != null){
+       $mime3 = $request->file('f3')->getMimeType();
+       if ($mime3 == "image/jpeg" || $mime3 == "image/jpg" || $mime3 == "image/png"){
+        
+      $fileName3 = $request->IDPerson . '_' ."cedAtrás". '_'. $file3->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName3,  File::get($file3));
+     $athleteImg->imgCA = $fileName3;
+     
+     }else{
+      $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+      return $this->eAthlete($request->IDPerson);
+     }
+      }
+   
+     $athleteImg->save();
+     $request->session()->flash('athlete', '¡ Editado correctamente! '); 
+     return $this->index();
+     
+     
+      }else{
+       
+      $file1 = $request->file('f1');
+      
+      
+     if ($file1 != null){
+      $mime = $request->file('f1')->getMimeType();
+      
+      if($mime == "image/jpeg" || $mime == "image/jpg" || $mime == "image/png"){
+       
+      $fileName1 = $request->IDPerson . '_' ."fotoPasaporte". '_'. $file1->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName1,  File::get($file1));
+     AthleteImg::where('IDPerson', $request->IDPerson)->update(['imgPasaport'=>$fileName1]);
+    
+     
+      }else{
+       $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+       return $this->eAthlete($request->IDPerson);
+      }
+     }
+      
+     $file2 = $request->file('f2');
+    
+     if ($file2 != null){
+      $mime2 = $request->file('f2')->getMimeType();
+      if($mime2 == "image/jpeg" || $mime2 == "image/jpg" || $mime2 == "image/png"){
+      
+      $fileName2 = $request->IDPerson . '_' ."cedFrente". '_'. $file2->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName2,  File::get($file2));
+     AthleteImg::where('IDPerson', $request->IDPerson)->update(['imgCF'=>$fileName2]);
+     
+     }else{
+      $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+      return $this->eAthlete($request->IDPerson);
+     }
+     }
+     $file3 = $request->file('f3');
+     
+    
+     if ($file3 != null){
+      $mime3 = $request->file('f3')->getMimeType();
+       if($mime3 == "image/jpeg" || $mime3 == "image/jpg" || $mime3 == "image/png"){
+      
+      $fileName3 = $request->IDPerson . '_' ."cedAtrás". '_'. $file3->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName3,  File::get($file3));
+     AthleteImg::where('IDPerson', $request->IDPerson)->update(['imgCA'=>$fileName3]);
+     
+     }else{
+      $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+      return $this->eAthlete($request->IDPerson);
+     }
+      }
+     
+     $request->session()->flash('athlete', '¡ Editado correctamente! '); 
+     return $this->index();
+      }
             
     }
     
     public function updateAthlete (Request $request){
      person::where('IDPerson', $request->IDPerson)->update(['name' => $request->name,'lastName1' => $request->lastName1,'lastName2' => $request->lastName2, 'birthDate' => $request->birthDate, 'telephone' => $request->telephone, 'email' => $request->email]); 
       athlete::where('IDPerson', $request->IDPerson)->update(['height' => $request->height,'weight' => $request->weight ]); 
-      $IDPerson = $request->IDPerson;
-      $IDEdition = $request->edition;
-       if (!$this->existPersonEdition ($IDPerson, $IDEdition)){
-      $personEdition = new personEdition;
-      $personEdition->IDPerson = $request->IDPerson;
-      $personEdition->IDEdition = $request->edition;
-      $personEdition->save();
-        return $this->indexDelegate();
-       }else if ($this->existPersonEdition ($IDPerson, $IDEdition)){
-        return $this->indexDelegate();
+     
+     if(!$this->existImg($request->IDPerson)){
+       $athleteImg = new AthleteImg;
+       $athleteImg->IDPerson = $request->IDPerson;
+       
+     $file1 = $request->file('f1');
+     
+      if ($file1 != null ){
+       $mime = $request->file('f1')->getMimeType();
+       if($mime == "image/jpeg" || $mime == "image/jpg" || $mime == "image/png"){
+      $fileName1 = $request->IDPerson . '_' ."fotoPasaporte". '_'. $file1->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName1,  File::get($file1));
+     $athleteImg->imgPasaport = $fileName1;
+    $request->session()->flash('athlete', '¡ Editado correctamente! '); 
+    $athleteImg->save();
+     return $this->indexDelegate();
+     }else{
+        $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+        return $this->editAthleteByDelegate($request->IDPerson);
+     }
       }
-            
+     
+     $file2 = $request->file('f2');
+     
+      if ($file2 != null){
+       $mime2 = $request->file('f2')->getMimeType();
+       if ( $mime2 == "image/jpeg" || $mime2 == "image/jpg" || $mime2 == "image/png"){
+       
+      $fileName2 = $request->IDPerson . '_' ."cedFrente". '_'. $file2->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName2,  File::get($file2));
+     $athleteImg->	imgCF = $fileName2;
+     $athleteImg->save();
+     $request->session()->flash('athlete', '¡ Editado correctamente! '); 
+     return $this->indexDelegate();
+     }else{
+      $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+      return $this->editAthleteByDelegate($request->IDPerson);
+     }
+      }
+     
+      $file3 = $request->file('f3');
+    
+     
+      if ($file3 != null){
+       $mime3 = $request->file('f3')->getMimeType();
+       if ($mime3 == "image/jpeg" || $mime3 == "image/jpg" || $mime3 == "image/png"){
+        
+      $fileName3 = $request->IDPerson . '_' ."cedAtrás". '_'. $file3->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName3,  File::get($file3));
+     $athleteImg->imgCA = $fileName3;
+     $athleteImg->save();
+     $request->session()->flash('athlete', '¡ Editado correctamente! '); 
+     return $this->indexDelegate();
+     }else{
+      $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+      return $this->editAthleteByDelegate($request->IDPerson);
+     }
+      }
+   
+     
+     
+      }else{
+       $athleteImg = new AthleteImg;
+       $athleteImg->IDPerson = $request->IDPerson;
+      $file1 = $request->file('f1');
+      
+      
+     if ($file1 != null){
+      $mime = $request->file('f1')->getMimeType();
+      if($mime == "image/jpeg" || $mime == "image/jpg" || $mime == "image/png"){
+       
+      $fileName1 = $request->IDPerson . '_' ."fotoPasaporte". '_'. $file1->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName1,  File::get($file1));
+     AthleteImg::where('IDPerson', $request->IDPerson)->update(['imgPasaport'=>$fileName1]);
+     
+     $request->session()->flash('athlete', '¡ Editado correctamente! '); 
+     return $this->indexDelegate();
+      }else{
+       $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+       return $this->editAthleteByDelegate($request->IDPerson);
+      }
+     }
+      
+     $file2 = $request->file('f2');
+    
+     if ($file2 != null){
+      $mime2 = $request->file('f2')->getMimeType();
+      if($mime2 == "image/jpeg" || $mime2 == "image/jpg" || $mime2 == "image/png"){
+      
+      $fileName2 = $request->IDPerson . '_' ."cedFrente". '_'. $file2->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName2,  File::get($file2));
+     AthleteImg::where('IDPerson', $request->IDPerson)->update(['imgCF'=>$fileName2]);
+     
+     $request->session()->flash('athlete', '¡ Editado correctamente! '); 
+     return $this->indexDelegate();
+     }else{
+      $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+      return $this->editAthleteByDelegate($request->IDPerson);
+     }
+     }
+     $file3 = $request->file('f3');
+     
+    
+     if ($file3 != null){
+      $mime3 = $request->file('f3')->getMimeType();
+       if($mime3 == "image/jpeg" || $mime3 == "image/jpg" || $mime3 == "image/png"){
+      
+      $fileName3 = $request->IDPerson . '_' ."cedAtrás". '_'. $file3->getClientOriginalName(); 
+     Storage::disk('photos')->put($fileName3,  File::get($file3));
+     AthleteImg::where('IDPerson', $request->IDPerson)->update(['imgCA'=>$fileName3]);
+     
+     $request->session()->flash('athlete', '¡ Editado correctamente! '); 
+     return $this->indexDelegate();
+     }else{
+      $request->session()->flash('error', '¡ Formato de imagen incorrecto! ');
+      return $this->editAthleteByDelegate($request->IDPerson);
+     }
+      }
+   $athleteImg->save();
+      }
+        
+        
     }
     
     public function exist($IDPerson){
     if (Person::where('IDPerson', '=', $IDPerson)->exists()) {
+       return true;
+    }else{
+       return false;
+    }
+  }
+  
+  
+  public function existImg($IDPerson){
+    if (AthleteImg::where('IDPerson', '=', $IDPerson)->exists()) {
        return true;
     }else{
        return false;
@@ -552,6 +915,7 @@ public function searchDelegado(Request $request){
     }
     
      public function deleteDel(Request $request, $IDPerson){
+      
       user::where('IDPerson' , $IDPerson)->delete();
       person::where('IDPerson' , $IDPerson)->delete();
      return $this-> showDelegados(); 
@@ -630,7 +994,7 @@ public function showExtra()
     
     public function showExtraDel()
     {
-     $community = session()->get('IDCommunity');
+     $community = session()->get('community');
      $person =  Person::join('community','person.IDCommunity','=','community.IDCommunity')
          -> join('role','person.IDRole','=','role.IDRole')
          ->select('person.IDRole', 'person.IDCommunity','person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','person.email','person.telephone','role.role')
@@ -691,6 +1055,16 @@ public function searchExtra(Request $request){
            ->with ('eExtra', $eExtra);
     }
     
+    public function editExtra (Request $request, $IDPerson){
+     $eExtra = Person::join('community','person.IDCommunity','=','community.IDCommunity')
+         -> join('role','person.IDRole','=','role.IDRole')
+         ->select('person.IDRole','person.name','person.lastName1','person.lastName2','person.IDPerson','person.birthDate','community.nameCommunity','person.email','person.telephone','role.role')
+         ->where('person.IDPerson', $IDPerson)->first();
+     
+        return view('/PersonalExtra/edit')
+           ->with ('eExtra', $eExtra);
+    }
+    
     public function editExtraS (Request $request){
      person::where('IDPerson', $request->IDPerson)->update(['name' => $request->name,'lastName1' => $request->lastName1,'lastName2' => $request->lastName2, 'birthDate' => $request->birthDate, 'telephone' => $request->telephone, 'email' => $request->email]); 
      return $this->showExtra();
@@ -704,11 +1078,13 @@ public function searchExtra(Request $request){
     }
 
 public function deleteExtra(Request $request, $IDPerson){
+  personEdition::where('IDPerson' , $IDPerson)->delete();
       person::where('IDPerson' , $IDPerson)->delete();
      return $this-> showExtra(); 
 }
 
 public function deleteExtraDel(Request $request, $IDPerson){
+  personEdition::where('IDPerson' , $IDPerson)->delete();
       person::where('IDPerson' , $IDPerson)->delete();
      return $this-> showExtraDel(); 
 }

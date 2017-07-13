@@ -34,7 +34,7 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
             <form class="form-horizontal" role="form" method="POST" action="{{url('searchAp/')}}">
                {{ csrf_field() }}
                <div class="col-md-9">
-                  <input id="filter" placeholder='Digite la cedula, el nombre, apellido o cargo' type="text" class="form-control" name="filter" value="{{ old('filter') }}" required autofocus>
+                  <input id="filter" placeholder='Digite la cédula, el nombre, apellido o cargo' type="text" class="form-control" name="filter" value="{{ old('filter') }}" required autofocus>
                   @if ($errors->has('filter'))
                   <span class="help-block">
                   <strong>{{$errors->first('filter')}}</strong>
@@ -60,7 +60,7 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
    <div class="table-responsive text-center">
       <table class="table table-hover table-striped text-center">
          <thead>
-            <th>Numero de identificación</th>
+            <th>Número de identificación</th>
             <th>Nombre del delegado</th>
             <th>Primer Apellido</th>
             <th>Segundo Apellido</th>

@@ -14,7 +14,7 @@
                         <div class="form-group{{ $errors->has('telephone') ? ' has-error' : '' }}">
                             <label for="telephone" class="col-md-4 control-label">Teléfono:</label>
                             <div class="col-md-6">
-                                <input id="telephone" type="telephone" class="form-control" name="telephone" value="{{ old('telephone') }}" required autofocus>
+                                <input id="telephone" type="telephone" class="form-control" name="telephone" placeholder = "Ej. 8-888-88-88" pattern="^[0-9]{1}[\-][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}" value="{{ old('telephone') }}" required autofocus>
 
                                 @if ($errors->has('telephone'))
                                 <span class="help-block">
@@ -26,7 +26,7 @@
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">Correo Electrónico:</label>
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="xxx@yyy.zzz" required autofocus>
 
                                 @if ($errors->has('email'))
                                 <span class="help-block">

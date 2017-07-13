@@ -85,10 +85,10 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                 <tr>
                   <td>{{$s->nameSport}}</td>
                   @if ($s->IDSportType == 1)
-                      <td>Conjunto</td>
+                      <td>Individual</td>
                   @else 
                    @if ($s->IDSportType == 2)
-                      <td>Individual</td>
+                      <td>Conjunto</td>
                       @endif
                     @endif  
                     <td>{{$s->athletesAmount}}</td>

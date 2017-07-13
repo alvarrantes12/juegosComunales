@@ -14,6 +14,12 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
 @extends('masterPage')
 @section('content')
 <section>
+    @if (Session::has('athlete'))
+             <div align = "center">
+             <div class="alert alert-success">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('athlete')}}</div></div>
+            @endif
       <div class="row">
 <div class="col-md-12 col-md-offset-0 text-center">
             <div class="panel panel-success">
@@ -29,7 +35,7 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
             <form class="form-horizontal" role="form" method="POST" action="{{url('filterPerson/')}}">
                {{ csrf_field() }}
                <div class="col-md-9">
-                  <input id="filter" placeholder='Digite la cedula del atleta, el nombre o apellido' type="text" class="form-control" name="filter" value="{{ old('filter') }}" required autofocus>
+                  <input id="filter" placeholder='Digite la cédula del atleta, el nombre o apellido' type="text" class="form-control" name="filter" value="{{ old('filter') }}" required autofocus>
                   @if ($errors->has('filter'))
                   <span class="help-block">
                   <strong>{{$errors->first('filter')}}</strong>
@@ -85,7 +91,11 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
              <td>{{$p->nameCommunity}}</td>
               <td>{{$p->nameSport}}</td>
                <td>{{$p->nameCategory}}</td>
-               
+               @if($p->imgPasaport != null)
+               <td><img src="data:image/jpeg;base64,{{base64_encode(Storage::disk('photos')->get($p->imgPasaport))}}" style= "height:70px;width:70px;"></td>
+               @else
+               <td>-----</td>
+               @endif
         <td>
                <a href="{{URL::to('editAthleteD/' . $p->IDPerson)}}">
                   <i class="fa fa-pencil-square-o"></i> <span>Editar</span>

@@ -77,7 +77,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         
   <input type="text" class="form-control" id="telephone" name = "telephone"
    value= "{{$ePerfil->telephone}}" style = "display:none;">
-<label for="" class="col-lg-4 control-label">Telefono</label>
+<label for="" class="col-lg-4 control-label">Teléfono</label>
 <div class="col-lg-6">
    <input type="text" class="form-control" id="telephone" name = "telephone" pattern="^[0-9]{1}[\-][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}"  title="Formato incorrecto, Solo 8 digitos son permitidos y con el formato 2-345-67-89" placeholder="2-494-01-02"
       value= "{{$ePerfil->telephone}}">
@@ -85,7 +85,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         
      <input type="text" class="form-control" id="email" name = "email"
    value= "{{$ePerfil->email}}" style = "display:none;">
-<label for="" class="col-lg-4 control-label">Correo electronico</label>
+<label for="" class="col-lg-4 control-label">Correo electrónico</label>
 <div class="col-lg-6">
    <input type="email" class="form-control" id="email" name = "email"
       value= "{{$ePerfil->email}}">
@@ -101,13 +101,13 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         
   <input type="text" class="form-control" id="IDRole" name = "IDRole"
       value= "{{$ePerfil->IDRole}}" style="visibility:hidden">     
-        
-        
-</div>
-<div class="col-lg-offset-8 col-lg-4">
+        <div class="col-lg-offset-8 col-lg-4">
       <a href="{{URL::to('adminMasterPageSlider/')}}"><button type="button" class="btn btn-info"><span class="glyphicon"> </span><span>Cancelar</span></button></a>
       <button type="submit" class="btn btn-info"><span class="glyphicon"> </span><span>Aceptar</span></button>
     </div>
+        
+</div>
+
 </form>
 </div>
 </div>

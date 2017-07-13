@@ -70,7 +70,7 @@ class testController extends Controller
       return $this->index();
       }else{
       $request->session()->flash('test', '¡Ya existe una prueba con este nombre!'); 
-      return $this -> index ();  
+      return $this -> insertTest ();  
       }
   }   
   
@@ -90,7 +90,7 @@ class testController extends Controller
     
     public function edit(Request $request, $IDTest){
     $all = test::join('categoryTest', 'test.IDTest', '=' , 'categoryTest.IDTest')
-                    -> join('category', 'categoryTest.IDCategory', '=', 'category.IDCategory')
+                    ->join('category', 'categoryTest.IDCategory', '=', 'category.IDCategory')
                     ->join('categorySport','category.IDCategory','=','categorySport.IDCategory')
                     -> join ('sport', 'categorySport.IDSport','=','sport.IDSport')
                     ->select('nameCategory', 'nameTest', 'nameSport', 'test.IDTest', 'sport.IDSport', 'category.IDCategory')
@@ -127,7 +127,6 @@ class testController extends Controller
                     ->with('test', $all);
              
             } else {
-                $request->session()->flash('test', '¡No existen coincidencias para '+ $request->filter +'!');   
                 return view('/Test/show')
                     ->with('test', $all);
             } 
@@ -137,7 +136,7 @@ class testController extends Controller
      
      public function getCategory($IDSport){
          $category = category::join('categorySport', 'category.IDCategory', '=', 'categorySport.IDCategory')
-         ->select('category.IDCategory', 'category.nameCategory')->where('categorySport.IDSport', $IDSport)->get();
+         ->select('category.IDCategory', 'category.nameCategory', 'category.active')->where('categorySport.IDSport', $IDSport)->get();
          
          return  $category;
      }

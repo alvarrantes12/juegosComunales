@@ -15,6 +15,12 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 @extends('masterPage')
 @section('content')
  <section>
+     @if (Session::has('person'))
+             <div align = "center">
+             <div class="alert alert-danger">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('person')}}</div></div>
+            @endif
       <div class="row">
         
          <div class="col-md-7 col-md-offset-2 text-center">
@@ -34,6 +40,17 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                          value= "{{$edition->IDEdition}}">
         
                      </div>
+                     <div>
+                   <label for="" class="col-lg-4 control-label">Tipo de participante</label>
+                   <div class="btn-group col-lg-6">
+                   <select class="form-control" id="role" name="role" required autofocus>
+                   <option value="" selected>Seleccione un tipo de participante...</option>
+                   @foreach ($role as $r)
+                   <option value ='{{$r->IDRole}}'>{{$r->role}}</option>
+                   @endforeach
+                   </select>
+                   </div>
+                  </div>
                      <label for="" class="col-lg-4 control-label">Número de identificación</label>
                      <div class="col-lg-6">
                         <input type="text"  class="form-control" name="IDPerson" id="IDPerson" placeholder="" pattern="^[\s\S]{0,191}$" required autofocus>
@@ -101,17 +118,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                   </div>
                 
                   
-                  <div>
-                   <label for="" class="col-lg-4 control-label">Tipo de participante</label>
-                   <div class="btn-group col-lg-6">
-                   <select class="form-control" id="role" name="role" required autofocus>
-                   <option value="" selected>Seleccione un tipo de participante...</option>
-                   @foreach ($role as $r)
-                   <option value ='{{$r->IDRole}}'>{{$r->role}}</option>
-                   @endforeach
-                   </select>
-                   </div>
-                  </div>
+                  
                   <br>
                   <br>
                   <div>

@@ -56,7 +56,7 @@ class sportController extends Controller
       return $this -> index();
   }else{
       $request->session()->flash('sport', '¡Ya existe un deporte con este nombre!'); 
-      return $this -> index ();  
+      return $this -> insertSport ();  
   }
   }
  

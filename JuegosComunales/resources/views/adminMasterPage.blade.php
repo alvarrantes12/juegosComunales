@@ -44,12 +44,7 @@
 <body class="hold-transition skin-green sidebar-mini">
 <!-- Site wrapper -->
 
- @if (Session::has('perfil'))
-             <div align = "center">
-             <div class="alert alert-success">
-             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-             {{Session::get('perfil')}}</div></div>
-            @endif
+ 
 
 
 <div class="wrapper">
@@ -58,7 +53,7 @@
     <!-- Logo -->
     
     
-    <a href="adminMasterPageSlider" class="logo">
+    <a href="/adminMasterPageSlider" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>J</b>C</span>
       <!-- logo for regular state and mobile devices -->

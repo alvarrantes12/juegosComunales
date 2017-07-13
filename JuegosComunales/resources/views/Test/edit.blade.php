@@ -19,15 +19,15 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
       <div class="row">
 
 <div class="col-md-10 col-md-offset-1 text-center">
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h4 style="color: #899B82;">Nueva Prueba</h4>
+    <div class="panel panel-success">
+               <div class="panel-heading">
+            <h4 style="color: #899B82;">Editar Prueba</h4>
         </div>
         <div class="panel-body">
             <form class="form-horizontal" role="form" method="POST" action="{{ url('editTest/') }}">
             <div class="form-group">
             {!!csrf_field() !!}
-                <label for="" class="col-lg-4 control-label">Deporte al que pertenece:</label>
+                <label for="" class="col-lg-4 control-label">Deporte al que pertenece</label>
                 <div class="col-lg-6 sport">
                    <select class="form-control" id = "sport" name = "sport" >
                     <option value="$test->IDSport" selected>{{$test->nameSport}}</option>
@@ -36,21 +36,23 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                         @endforeach
                    </select>
                 </div>
-                <label for="" class="col-lg-4 control-label">Categoría a la que pertenece:</label> 
+                <label for="" class="col-lg-4 control-label">Categoría a la que pertenece</label> 
                 <div class="col-lg-6 category">
                     <select class="form-control" id = "category" name = "category" >
                         <option value = '{{$test->IDCategory}}' selected>{{$test->nameCategory}}</option>
                           
                     </select>
                 </div>
-                <label for="" class="col-lg-4 control-label">Nombre de la prueba:</label>
+                <label for="" class="col-lg-4 control-label">Nombre de la prueba</label>
                 <div class="col-lg-6">
                     <input type="text" class="form-control" id="IDTest" name = "IDTest" value="{{$test->IDTest}}" style="display:none">
                
                   <input pattern="^[\d\s\S]{0,25}$" title="Maximo 25 carácteres" type="text" class="form-control" id="testName" name = "testName" placeholder="Ej. 100 metros planos" value="{{$test->nameTest}}" required autofocus>
                 </div>
          
+
             <div class="col-lg-offset-8 col-lg-4">
+              <br>
               <a href="{{URL::to('test/')}}"><button type="button" class="btn btn-info"><span class="glyphicon"> </span><span>Cancelar</span></button></a>
               <button type="submit" class="btn btn-info"><span class="glyphicon"> </span><span>Aceptar</span></button>
             </div>

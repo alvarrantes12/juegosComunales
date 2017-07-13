@@ -128,9 +128,8 @@ tr:nth-child(even) {
                           <td><img src="dist/img/LogoComite.png"></img></td>
                       </tr>
                   </table>
-                
-                   
-                     
+                    <img src="dist/img/fondo.jpg"  alt="Bandera Grecia" width="100%" height="10">
+                      <br> 
                   <h3  align="center">Todos los atletas registrados en la edición <?=  $edition; ?> </h3>
                   <br>
                   

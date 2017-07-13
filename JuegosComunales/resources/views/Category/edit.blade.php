@@ -28,44 +28,55 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                   <form class="form-horizontal" role="form">
  <div class="form-group">
     {!!csrf_field() !!}
-    <label for="" class="col-lg-4 control-label">Deporte:</label>
+      <div class="col-lg-12">
+        <div align="right" class="col-lg-4">
+    <label for="" class="control-label">Deporte</label>
+    </div>
       <div class="col-lg-6">
         <select class="form-control" id = "sport" name = "sport">
             <option  value= "{{$eCategory->IDSport}}" selected>{{$eCategory->nameSport}}</option>
             @foreach ($sport as $s)
             @if ($eCategory->IDSport == $s->IDSport)
             @else
+                 @if($s->active == 1)
                 <option  value ='{{$s->IDSport}}'>{{$s->nameSport}}</option>
+           @endif
             @endif
 
             @endforeach
         </select>
     </div>
-    <label for="" class="col-lg-4 control-label">Nombre de la categoría:</label>
+     </div>
+      <div class="col-lg-12">
+        <div align="right" class="col-lg-4">
+    <label for="" class=" control-label">Nombre de la categoría</label>
+    </div>
     <div class="col-lg-6">
       <input pattern="^[\d\s\S]{0,25}$" title="Maximo 25 carácteres" type="text" class="form-control" id="nameCategory" name = "nameCategory"
              value= "{{$eCategory->nameCategory}}">
     </div>
+     </div>
     
-    
-
-    <label for="" class="col-lg-4 control-label">Edad mínima:</label>
-    <div class="col-lg-6">
-             <div class="col-lg-4">
+  <div class="col-lg-12">
+        <div align="right" class="col-lg-4">
+    <label for="" class="control-label">Edad mínima</label>
+  </div>
+             <div align="left" class="col-lg-6">
                 <input type="number" class="form-control" name="startAge" id="startAge" value= "{{$eCategory->startAge}}"pattern="[0-9]{2}" title="Solo se permíten números"  required autofocus>
             </div>
-             <div class="col-lg-2">
+             <div align="left" class="col-lg-2">
                  <label for="" class="control-label">Años</label>
                  </div>
             </div>
         
-        
-        <label for="" class="col-md-4 control-label">Edad máxima:</label>
-    <div class="col-lg-6">
-            <div class="col-lg-4">
+        <div class="col-lg-12">
+        <div align="right" class="col-lg-4">
+        <label for="" class="control-label">Edad máxima</label>
+        </div>
+    <div  padding-left="15px"align="left" class="col-lg-6">
                 <input type="number" class="form-control" name="endAge" id="endAge"  value= "{{$eCategory->endAge}}" pattern="[0-9]{2}" title="Solo se permíten números"  required autofocus>
             </div>
-            <div class="col-lg-2">
+            <div align="left" class="col-lg-2">
                 <label for="" class="control-label">Años</label>
                 </div>
             </div>

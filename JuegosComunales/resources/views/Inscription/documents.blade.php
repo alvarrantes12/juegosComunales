@@ -14,11 +14,16 @@ Vista que se encarga de crear un formulario con el fin de seleccionar el deporte
 específicos con el fin de recolectar parte de los datos de la inscripción de los participantes en el sistema-->
 @extends('adminMasterPage')
 @section('adminContent')
-<section>
-      <div class="row">
+
 <div class="form-group">
 <div class="container-fluid">
     <div class="container">
+        @if (Session::has('delegate'))
+             <div align = "center">
+             <div class="alert alert-success">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('delegate')}}</div></div>
+            @endif
         <div class="col-md-7 col-md-offset-2 text-center">
             <h2>Nuevo participante</h2>
         </div>
@@ -88,19 +93,21 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
     <label for="" class="col-lg-4 control-label">Deporte</label>
     <div class="col-lg-6">
       <select  class="form-control" id = "sport" name = "sport" required autofocus>
-                    <option value="0" selected>Seleccione un tipo de deporte...</option>
+                    <option value="" selected>Seleccione un tipo de deporte...</option>
                         @foreach ($sport as $s)
+                        @if($s->active == 1)
                             <option  value ='{{$s->IDSport}}'>{{$s->nameSport}}</option>
+                            @endif
                         @endforeach
                    </select>
                 </div>
-                <label for="" class="col-lg-4 control-label">Categoría:</label> 
+                <label for="" class="col-lg-4 control-label">Categoría</label> 
                 <div class="col-lg-6 category">
                     <select class="form-control" id = "category" name = "category" required autofocus>
-                        <option value="0" selected>Debe seleccionar un deporte primero</option>
+                        <option value="" selected>Debe seleccionar un deporte primero</option>
                     </select>
                 </div>
-                <label id= "label" name= "label" for="" class="col-lg-4 control-label" style="display:none">Prueba:</label> 
+                <label id= "label" name= "label" for="" class="col-lg-4 control-label" style="display:none">Prueba</label> 
                 <div class="col-lg-6 category">
                     <select class="form-control" id = "test" name = "test" style="display:none">
                     </select>
@@ -128,34 +135,32 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
     
     <section class="col-md-12">
     <div class="col-md-3">
-        <label for="adj">Fotografia (imagen)</label>
+        <label for="adj">Fotografía (imagen)</label>
         </div>
         
     <div class="col-md-4">
-    <input type="file" id="archivo1" name="archivo1">
+    <input type="file" id="f1" name="f1">
         </div>
     </section>
     
     
-    
-    
     <section class="col-md-12">
     <div class="col-md-3">
-        <label for="adj">Foto cedula frente (imagen)</label>
+        <label for="adj">Foto cédula frente (imagen)</label>
         </div>
         
     <div class="col-md-4">
-    <input type="file" id="archivo2">
+    <input type="file" id="f2" name="f2">
         </div>
     </section>
     
     <section class="col-md-12">
     <div class="col-md-3">
-        <label for="adj">Foto cedula atras (imagen)</label>
+        <label for="adj">Foto cédula atras (imagen)</label>
         </div>
         
     <div class="col-md-4">
-    <input type="file" id="archivo3">
+    <input type="file" id="f3" name="f3">
         </div>
     </section>
      
@@ -168,14 +173,13 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 <div class="container-fluid">
     <div class="container">
         <div class="col-md-7 col-md-offset-2 text-center">
-           <button type="submit" class="btn btn-primary"><span class="glyphicon"> </span><span>Finalizar inscripcion</span></button>
+           <button type="submit" class="btn btn-primary"><span class="glyphicon"> </span><span>Finalizar inscripción</span></button>
         </div>
     </div>
 </div>
 </form>
 </div>
-</div>
-</section>
+
 @endsection
 
 
@@ -187,9 +191,12 @@ $(document).ready(function() {
     $("#sport").change(function() {
         	$("#category ").empty();
 	$.getJSON(('getCategory/')+$("#sport").val(),function(data){
-	     $("#category").append('<option value="0">Seleccione una categoría</option>');
+	     $("#category").append('<option value="">Seleccione una categoría</option>');
 	    $.each(data, function(id,item){
+	        if(item.active == 1){
 		    $("#category").append('<option value="'+item.IDCategory+'">'+item.nameCategory+'</option>');
+	    }
+	        
 	    });
 	});
 	
@@ -208,7 +215,7 @@ $(document).ready(function() {
         	
         
 	$.getJSON(('getTest/')+$("#category").val(),function(data){
-	     $("#test").append('<option value="0">Seleccione una prueba</option>');
+	     $("#test").append('<option value="">Seleccione una prueba</option>');
 	    $.each(data, function(id,item){
 	        if (data != null) {
             $("#test").show();

@@ -63,7 +63,7 @@ class categoryController extends Controller
       return $this->index();
       }else{
       $request->session()->flash('category', '¡Ya existe una categoria con este nombre!'); 
-      return $this -> index ();  
+      return $this -> insertCategory ();  
       }
       
   }   
@@ -82,7 +82,7 @@ class categoryController extends Controller
                ->select('sport.nameSport','sport.IDSport','category.IDCategory', 
                'category.nameCategory', 'category.startAge', 'category.endAge', 'category.active')->where('category.IDCategory', $IDCategory)
                       ->first();
-        $request->session()->flash('category', '¡Categoría  editada correctamente!');
+       
         return view('/Category/edit')
             ->with ('eCategory', $category)
               ->with ('sport', Sport::all());
@@ -129,6 +129,7 @@ class categoryController extends Controller
         Category::where('IDCategory', $request->IDCategory)->update(['nameCategory' => $request->nameCategory,
         'startAge' => $request->startAge, 'endAge' => $request->endAge]);
         categorySport::where ('IDCategory', $request->IDCategory)->update(['IDSport' => $request->sport]);
+         $request->session()->flash('category', '¡Categoría  editada correctamente!');
         return $this->index();
     }
   

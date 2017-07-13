@@ -16,6 +16,11 @@ use App\sport;
 use App\category;
 use App\athleteCategory;
 use App\categorySport;
+use Carbon\Carbon;
+use App\personEdition;
+use App\edition;
+use App\personTest;
+
 
 
 class excelController extends Controller
@@ -41,32 +46,45 @@ class excelController extends Controller
     {
         $this->middleware('auth');
         
+        
     }
 
    public function index()
   {
-       return view ('/inscriptionByExcel')->with ('sport', Sport::all())->with ('category', Category::all())->with ('community', Community::all())->with ('district', District::all());
+       $date = Carbon::now();
+    $year = $date->format('Y');
+    $edition = Edition::select('IDEdition','nameEdition', 'year', 'startDate', 'endDate')->where('year', $year)
+                      ->first();
+       return view ('/inscriptionByExcel')->with ('sport', Sport::all())->with ('category', Category::all())->with ('community', Community::all())->with ('district', District::all())->with('edition', $edition);
   }
   
   public function indexDelegate()
   {
-       return view ('/inscriptionByExcelDelegate')->with ('sport', Sport::all())->with ('category', Category::all());
+       $date = Carbon::now();
+    $year = $date->format('Y');
+    $edition = Edition::select('IDEdition','nameEdition', 'year', 'startDate', 'endDate')->where('year', $year)
+                      ->first();
+       return view ('/inscriptionByExcelDelegate')->with ('sport', Sport::all())->with ('category', Category::all())->with('edition', $edition);
   }
   
   public function readExcel (){
+   
       $fileN = session()->get('fileName');
       
       
        $userType = session()->get('IDRole');
         if ($userType == 1){
+             
       Excel::load('storage/app/public/'.$fileN, function($file)
   {
       
    $result=$file->get();
-   $badRegister = 0;
+   $badRegister=0;
+     $goodRegister=0;
    
    foreach($result as $key => $value)
    {
+       
       if ($value->identificacion != '' && $value->nombre != '' && $value->primer_apellido != '' && $value->segundo_apellido != '' &&
           $value->fecha_nacimiento != '' && $value->tipo_sangre != '' && $value->peso_en_kilos != '' 
           && $value->estatura_en_centimetros != '' && $value->genero != ""  && $value->direccion != "" ){
@@ -85,7 +103,7 @@ class excelController extends Controller
                 $person->gender = $value->genero;
                 $person->IDRole =  3;
                
-                $person->IDCommunity =  session()->get('community');
+                $person->IDCommunity =  session()->get('communityExcel');
                 $person->active = 1;
                 $person->address = $value->direccion;
                 $person->save();
@@ -103,19 +121,35 @@ class excelController extends Controller
                 $athleteCategory->IDCategory = session()->get('categoryExcel');
                 $athleteCategory->save();
                 
-
+                $personEdition = new personEdition;
+                $personEdition->IDPerson = $value->identificacion;
+                $personEdition->IDEdition = session()->get('editionExcel');
+                $personEdition->save();
+                
+                $test = session()->get('testExcel');
+                if ($test != null){
+                    $personTest = new personTest;
+                    $personTest->IDPerson = $value->identificacion;
+                    $personTest->IDTest = $test;
+                    $personTest->save();
+                }
+                
+                 $goodRegister += 1;
             }else{
-              $badRegister += 1;
+              $badRegister = $badRegister + 1;
+              
            }
              
                 
        }else{
-           $badRegister += 1;
+           $badRegister = $badRegister + 1;
        }
     
    }
   })->get();
     Storage::disk('public')->delete($fileN);
+    session()->flash('athlete', '¡Atletas inscritos correctamente!');
+    
     return redirect('/showP');
   }else{
       Excel::load('storage/app/public/'.$fileN, function($file)
@@ -162,7 +196,19 @@ class excelController extends Controller
                 $athleteCategory->IDCategory = session()->get('categoryExcel');
                 $athleteCategory->save();
                
+                $personEdition = new personEdition;
+                $personEdition->IDPerson = $value->identificacion;
+                $personEdition->IDEdition = session()->get('editionExcel');
+                $personEdition->save();
 
+                 $test = session()->get('testExcel');
+                if ($test != null){
+                    $personTest = new personTest;
+                    $personTest->IDPerson = $value->identificacion;
+                    $personTest->IDTest = $test;
+                    $personTest->save();
+                }
+                
             }else{
               $badRegister += 1;
            }
@@ -193,18 +239,26 @@ class excelController extends Controller
             $s = $request->sport;
             $c = $request->category;
             $com = $request->community;
+            $edition = $request->IDEdition;
+            $test = $request->test;
+            
             session(['sportExcel' => $s ]);
             session(['categoryExcel' => $c ]);
             session(['communityExcel' => $com ]);
+            session(['editionExcel' => $edition ]);
+            session(['testExcel' => $test ]);
             Storage::disk('public')->put($fileName,  File::get($file));
 
             return $this->showFile($fileName);
         }else{
             $s = $request->sport;
             $c = $request->category;
-           
+           $edition = $request->IDEdition;
+            $test = $request->test;
             session(['sportExcel' => $s ]);
             session(['categoryExcel' => $c ]);
+            session(['editionExcel' => $edition]);
+            session(['testExcel' => $test ]);
             Storage::disk('public')->put($fileName,  File::get($file));
 
             return $this->showFile($fileName);
@@ -225,7 +279,7 @@ class excelController extends Controller
 
  public function showFile ($fileName){
     
-     
+      
      Excel::load('storage/app/public/'.$fileName, function($file)
   {
      
@@ -235,6 +289,7 @@ class excelController extends Controller
   })->get();
     $userType = session()->get('IDRole');
      $person = session()->get('result');
+    
    if ($userType == 1){
        
         return view ('/showFile')->with('person', $person);
@@ -246,7 +301,6 @@ class excelController extends Controller
     
  }
  
-
     
     public function downloadExcelSheet (){
      return response()->download(storage_path("app/PlantillaExcel.xlsx"));

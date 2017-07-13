@@ -13,7 +13,8 @@ Clase: users
 Vista que se encarga de crear un formulario con el fin de mostrar los atletas inscritos-->
 @extends('masterPage')
 @section('content')
-
+<section>
+      <div class="row">
 <div class="col-md-12 col-md-offset-0 text-center">
     @if (Session::has('admin'))
              <div align = "center">
@@ -50,7 +51,7 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
          </td>
          <td align="center">
             <div class="col-md-12 ">
-               <a href="{{URL::to('newCoa/')}}"><button class="btn btn-info"><span class="glyphicon glyphicon-plus"> </span><span>  Agregar Nuevo Participante</span></button></a>
+               <a href="{{URL::to('insertNewPart/')}}"><button class="btn btn-info"><span class="glyphicon glyphicon-plus"> </span><span>  Agregar Nuevo Participante</span></button></a>
             </div>
          </td>
    </div>
@@ -66,16 +67,14 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
             <th>Segundo Apellido</th>
             <th>Fecha de nacimiento</th>
             <th>Correo electrónico</th>
-            <th>Teléfono</th>
+            
             <th>Comunidad</th>
             <th>Cargo</th>
            
          <th></th>
             <th></th>
          </thead>
-          @if(count($person) < 1)
-                <td>No existen coincidencias para su búsqueda</td>
-               @endif
+         
          @foreach ($person as $p)
          
          <tr>
@@ -86,7 +85,7 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
             <td>{{$p->birthDate}}</td>
             
             <td>{{$p->email}}</td>
-               <td>{{$p->telephone}}</td>
+             
              <td>{{$p->nameCommunity}}</td>
               <td>{{$p->role}}</td>
               
@@ -110,4 +109,6 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
 </div>
 </div>
 </div>
+</div>
+</section>
 @endsection

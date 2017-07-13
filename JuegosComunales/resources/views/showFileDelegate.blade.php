@@ -55,7 +55,7 @@
               
              
                <div class="col-md-6 col-md-offset-4">
-                 <a href="{{URL::to('excel/')}}"><button type="button" class="btn btn-primary">Cancelar</button></a>
+                 <a href="{{URL::to('excelUpload/')}}"><button type="button" class="btn btn-primary">Cancelar</button></a>
                 <button type="submit" class="btn btn-primary">Aceptar</button>
               </div>
             </div>

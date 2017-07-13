@@ -47,28 +47,28 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
                   </div>
                      <div  >
                         
-                     <label for="" class="col-lg-4 control-label">Numero de identificación</label>
+                     <label for="" class="col-lg-4 control-label">Número de identificación</label>
                      <div class="col-lg-6">
-                        <input type="text"  class="form-control" name="IDPerson" id="IDPerson" placeholder="" pattern="^[\s\S]{0,191}$" required autofocus>
+                        <input type="text"  class="form-control" name="IDPerson" id="IDPerson" placeholder="Ej. 201230123" pattern="^[\s\S]{0,191}$" required autofocus>
                      </div>
                   </div>
               
                   <div>
                      <label for="" class="col-lg-4 control-label">Nombre</label>
                      <div class="col-lg-6">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="" pattern="^[\s\S]{0,25}$" title="Maximo 25 letras"  required autofocus>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Ej. Juan" pattern="^[\s\S]{0,25}$" title="Maximo 25 letras"  required autofocus>
                      </div>
                   </div>
                   <div>
                      <label for="" class="col-lg-4 control-label">Primer Apellido</label>
                      <div class="col-lg-6">
-                        <input type="text" class="form-control"  name="lastName1" id="lastName1" placeholder="" pattern="^[\s\S]{0,12}$" title="Maximo 12 letras" required autofocus>
+                        <input type="text" class="form-control"  name="lastName1" id="lastName1" placeholder="Ej. Pérez" pattern="^[\s\S]{0,12}$" title="Maximo 12 letras" required autofocus>
                      </div>
                   </div>
                   <div>
                      <label for="" class="col-lg-4 control-label">Segundo Apellido</label>
                      <div class="col-lg-6">
-                        <input type="text" class="form-control" name="lastName2" id="lastName2" placeholder="" pattern="^[\s\S]{0,12}$" title="Maximo 12 letras" required autofocus>
+                        <input type="text" class="form-control" name="lastName2" id="lastName2" placeholder="Ej. Pérez" pattern="^[\s\S]{0,12}$" title="Maximo 12 letras" required autofocus>
                      </div>
                   </div>
                   <div>
@@ -93,7 +93,7 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
                      </div>
                   </div>
                   <div  >
-                     <label for="" id="label1" name="label1" style="display:none" class="col-lg-4 control-label">Correo electronico</label>
+                     <label for="" id="label1" name="label1" style="display:none" class="col-lg-4 control-label">Correo electrónico</label>
                      <div class="col-lg-6">
                         <input type="email" class="form-control" name="email" style="display:none" id="email"
                            placeholder="xxx@yyy.zzz" >
@@ -114,7 +114,9 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
                    <select  class="form-control" id="district" name="district" required autofocus>
                    <option value="0" selected>Seleccione un distrito...</option>
                    @foreach ($district as $p)
+                   @if($p->active == 1)
                    <option value ='{{$p->IDDistrict}}'>{{$p->nameDistrict}}</option>
+                   @endif
                    @endforeach
                    </select>
                    </div>
@@ -174,7 +176,9 @@ $(document).ready(function() {
 	$.getJSON(('getCommunity/')+$("#district").val(),function(data){
 	     $("#community").append('<option value="0">Seleccione una comunidad</option>');
 	    $.each(data, function(id,item){
+	        	if(item.active == 1){
 		    $("#community").append('<option value="'+item.IDCommunity+'">'+item.nameCommunity+'</option>');
+        }
 	    });
 	});
 	

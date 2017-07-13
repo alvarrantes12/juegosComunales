@@ -17,6 +17,12 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 @section('content')
 
  <section>
+     @if (Session::has('error'))
+             <div align = "center">
+             <div class="alert alert-danger">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('error')}}</div></div>
+            @endif
       <div class="row">
 
 <div class="col-md-10 col-md-offset-1 text-center">
@@ -27,7 +33,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                <div class="panel-body">
 
 
- <form class="form-horizontal" role="form" method="POST" action="{{ url('updateAthlete/') }}">
+ <form class="form-horizontal" role="form" method="POST" action="{{ url('updateAthlete/') }}"  enctype="multipart/form-data">
       
  <div class="form-group">
     {!!csrf_field() !!}
@@ -121,7 +127,35 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
    <input type="number" class="form-control" id="weight" name = "weight"
       value= "{{$eAthlete->weight}}" required autofocus>
 </div>   
-
+<div class="col-md-12"></div>
+                  <label class="col-md-4 control-label">Fotografía (imagen)</label> 
+              <div class="col-md-6">
+                    
+                    <input type="file" id="f1" name="f1">
+               
+              <br>
+             
+              </div>
+    <div class="col-md-12"></div>
+                  <label class="col-md-4 control-label">Foto cédula frente (imagen)</label> 
+              <div class="col-md-6">
+                    
+                    <input type="file" id="f2" name="f2">
+               
+              <br>
+             
+              </div>
+              
+    <div class="col-md-12"></div>
+                  <label class="col-md-4 control-label">Foto cédula atrás (imagen)</label> 
+              <div class="col-md-6">
+                    
+                    <input type="file" id="f3" name="f3">
+               
+              <br>
+             
+              </div>
+ 
 
 
 

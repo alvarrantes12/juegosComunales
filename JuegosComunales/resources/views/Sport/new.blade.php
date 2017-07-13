@@ -16,6 +16,12 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 
 @section('adminContent')
 <section>
+    @if (Session::has('sport'))
+             <div align = "center">
+             <div class="alert alert-danger">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('sport')}}</div></div>
+             @endif
       <div class="row">
     <div class="col-md-10 col-md-offset-1 text-center">
             <div class="panel panel-success">
@@ -27,12 +33,12 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
   <form class="form-horizontal" role="form" method="POST" action="{{ url('insertNewSport/') }}">
     <div class="form-group">
       {!!csrf_field() !!}
-      <label for="" class="col-lg-4 control-label">Nombre del deporte:</label>
+      <label for="" class="col-lg-4 control-label">Nombre del deporte</label>
       <div class="col-lg-6">
         <input pattern="^[\d\s\S]{0,25}$" title="Maximo 25 carácteres" type="text" class="form-control" id="sportName" name = "sportName"
              placeholder="Ej. Ciclismo" value="{{ old('sportName') }}" required autofocus>
       </div>
-      <label for="" class="col-lg-4 control-label">Tipo de Deporte:</label>
+      <label for="" class="col-lg-4 control-label">Tipo de Deporte</label>
       <div class = "col-lg-6">
         <select class="form-control" id = "sportT" name = "sportT" required autofocus>
             <option value="0" selected>Seleccione un tipo de deporte...</option>
@@ -42,7 +48,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         </select>
     </div>
     <div></div>
-    <label for="" class="col-lg-4 control-label">Cantidad de Atletas:</label>
+    <label for="" class="col-lg-4 control-label">Cantidad de Atletas</label>
       <div class="col-lg-6">
         <input type="number" name = "athleteAmount" class="form-control" min="1" required autofocus>
              

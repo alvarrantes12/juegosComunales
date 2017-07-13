@@ -6,7 +6,7 @@
    <div class="col-md-10 col-md-offset-1 text-center">
             <div class="panel panel-success">
                <div class="panel-heading">
-                  <h4 style="color: #899B82;">Actualizar comunidad</h4>
+                  <h4 style="color: #899B82;">Editar comunidad</h4>
                </div>
                <div class="panel-body">
    
@@ -25,13 +25,16 @@
             <select class="form-control" id="district" name="district">
                <option value ='{{$Community->IDDistrict}}' selected>{{$Community->nameDistrict}}</option>
                @foreach ($district as $d)
+                @if($d->active == 1)
                <option value ='{{$d->IDDistrict}}'>{{$d->nameDistrict}}</option>
+                @endif
                @endforeach
             </select>
          </div>
       </div>
       <br><br>
       <div class="col-lg-offset-8 col-lg-4">
+         <br>
          <a href="{{URL::to('community/')}}"><button type="button" class="btn btn-info"><span class="glyphicon"> </span><span>Cancelar</span></button></a>
          <button type="submit" class="btn btn-info"><span class="glyphicon"> </span><span>Aceptar</span></button>
       </div>

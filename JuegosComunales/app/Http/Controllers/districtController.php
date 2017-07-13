@@ -54,7 +54,7 @@ class districtController extends Controller
      return $this->index();
       }else{
       $request->session()->flash('district', '¡Ya existe un distrito con este nombre!'); 
-      return $this -> index ();  
+      return $this -> add ();  
      }
     }
     
@@ -74,7 +74,7 @@ class districtController extends Controller
 public function edit(Request $request, $IDDistrict){
          $district = district::where('district.IDDistrict', $IDDistrict)
                       ->first();
-         $request->session()->flash('district', '¡ Distrito editado correctamente!');
+        
         return view('/District/edit')
             ->with ('district', $district);
             
@@ -82,7 +82,7 @@ public function edit(Request $request, $IDDistrict){
     
     public function editDistrict(Request $request){
      district::where('IDDistrict', $request->idDistrict)->update(['nameDistrict' => $request->district]); 
-     
+      $request->session()->flash('district', '¡ Distrito editado correctamente!');
    
         return $this->index();
             

@@ -17,6 +17,12 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 @section('adminContent')
 
 <section>
+     @if (Session::has('error'))
+             <div align = "center">
+             <div class="alert alert-danger">
+             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             {{Session::get('error')}}</div></div>
+            @endif
       <div class="row">
 
 <div class="col-md-10 col-md-offset-1 text-center">
@@ -27,7 +33,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                <div class="panel-body">
 
 
- <form class="form-horizontal" role="form" method="POST" action="{{ url('editA/') }}">
+ <form class="form-horizontal" role="form" method="POST" action="{{ url('editA/') }}" enctype="multipart/form-data">
       
  <div class="form-group">
     {!!csrf_field() !!}
@@ -91,7 +97,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         
   <input type="text" class="form-control" id="telephone" name = "telephone"
    value= "{{$eAthlete->telephone}}" style = "display:none;">
-<label for="" class="col-lg-4 control-label">Telefono</label>
+<label for="" class="col-lg-4 control-label">Teléfono</label>
 <div class="col-lg-6">
    <input type="text" class="form-control" id="telephone" name = "telephone" pattern="^[0-9]{1}[\-][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}"  title="Formato incorrecto, Solo 8 digitos son permitidos y con el formato 2-345-67-89" placeholder="2-494-01-02"
       value= "{{$eAthlete->telephone}}">
@@ -99,7 +105,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         
      <input type="text" class="form-control" id="email" name = "email"
    value= "{{$eAthlete->email}}" style = "display:none;">
-<label for="" class="col-lg-4 control-label">Correo electronico</label>
+<label for="" class="col-lg-4 control-label">Correo electrónico</label>
 <div class="col-lg-6">
    <input type="email" class="form-control" id="email" name = "email"
       value= "{{$eAthlete->email}}">
@@ -120,8 +126,36 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 <div class="col-lg-6">
    <input type="number" class="form-control" id="weight" name = "weight"
       value= "{{$eAthlete->weight}}" required autofocus>
-</div>   
-
+</div>
+ <div class="col-md-12"></div>
+                  <label class="col-md-4 control-label">Fotografía (imagen)</label> 
+              <div class="col-md-6">
+                    
+                    <input type="file" id="f1" name="f1">
+               
+              <br>
+             
+              </div>
+    <div class="col-md-12"></div>
+                  <label class="col-md-4 control-label">Foto cédula frente (imagen)</label> 
+              <div class="col-md-6">
+                    
+                    <input type="file" id="f2" name="f2">
+               
+              <br>
+             
+              </div>
+              
+    <div class="col-md-12"></div>
+                  <label class="col-md-4 control-label">Foto cédula atrás (imagen)</label> 
+              <div class="col-md-6">
+                    
+                    <input type="file" id="f3" name="f3">
+               
+              <br>
+             
+              </div>
+ 
 
 
 

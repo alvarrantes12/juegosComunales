@@ -15,7 +15,7 @@
             <div class="panel panel-success">
                 
                <div class="panel-heading">
-                  <h4 style="color: #899B82;">Distritos Registradas</h4>
+                  <h4 style="color: #899B82;">Distritos Registrados</h4>
                </div>
                <div class="panel-body">
                    
@@ -54,6 +54,7 @@
         <table class="table table-hover table-striped text-left">
             <thead>
                 <th>Distrito</th>
+                <th>Estado</th
                 <th></th>
                 <th></th>
             </thead>
@@ -67,7 +68,11 @@
                 <td>
                     {{$p->nameDistrict}}
                 </td>
-                
+                 @if ($p->active == 1)
+                        <td>Activo</td>
+                     @else
+                        <td>Inactivo</td>
+                     @endif
                 
                 <td>
                    <a href="{{URL::to('editDistrict/'.$p->IDDistrict)}}">

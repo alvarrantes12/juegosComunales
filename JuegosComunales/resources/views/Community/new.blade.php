@@ -5,11 +5,11 @@
   <section>
       <div class="row">
   <div class="col-md-10 col-md-offset-1 text-center">
-      @if (Session::has('error'))
+      @if (Session::has('comm'))
              <div align = "center">
              <div class="alert alert-danger">
              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-             {{Session::get('error')}}</div></div>
+             {{Session::get('comm')}}</div></div>
              @endif
             <div class="panel panel-success">
                <div class="panel-heading">
@@ -33,7 +33,9 @@
             <select class="form-control" id="district" name="district" required autofocus>
                <option value ="" selected>Seleccione un distrito...</option>
                @foreach ($district as $d)
+               @if($d->active == 1)
                <option value ='{{$d->IDDistrict}}'>{{$d->nameDistrict}}</option>
+               @endif
                @endforeach
             </select>
          </div>

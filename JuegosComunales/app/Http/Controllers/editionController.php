@@ -61,7 +61,7 @@ class editionController extends Controller
       return $this -> index ();
       }else{
       $request->session()->flash('edition', '¡Ya existe una edicion con este nombre!'); 
-      return $this -> index ();  
+      return $this -> insertEdition ();  
       }
   }
   
@@ -81,10 +81,10 @@ class editionController extends Controller
        return $this -> index ();
     }
   
-    public function editEdition(Request $request, $IDEdition){
+    public function editEdition( $IDEdition){
          $edition = Edition::select('IDEdition','nameEdition', 'year', 'startDate', 'endDate')->where('IDEdition', $IDEdition)
                       ->first();
-                      $request->session()->flash('edition', '¡ Edition editada correctamente!');
+                     
         return view('/Edition/edit')
             ->with ('eEdition', $edition);
     }
@@ -92,6 +92,7 @@ class editionController extends Controller
     public function eEdition (Request $request){
         Edition::where('IDEdition', $request->IDEdition)->update(['nameEdition' => $request->nameEdition,'year' => $request->year,
         'startDate' => $request->startDate, 'endDate' => $request->endDate]); 
+         $request->session()->flash('edition', '¡ Edition editada correctamente!');
         return $this->index();
     }
     

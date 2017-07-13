@@ -48,7 +48,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="homePage" class="logo">
+    <a href="/masterPageSlider" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>J</b>C</span>
       <!-- logo for regular state and mobile devices -->

@@ -35,7 +35,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
     
     <input type="text" class="form-control" id="IDPerson" name = "IDPerson"
    value= "{{$eExtra->IDPerson}}" style = "display:none;">
-<label for="" class="col-lg-4 control-label">Numero de identidad</label>
+<label for="" class="col-lg-4 control-label">Número de identificación</label>
 <div class="col-lg-6">
    <input readonly type="text" class="form-control" id="IDPerson" name = "IDPerson" 
       value= "{{$eExtra->IDPerson}}">

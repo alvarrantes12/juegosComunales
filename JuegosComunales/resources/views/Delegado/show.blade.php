@@ -13,14 +13,15 @@ Clase: users
 Vista que se encarga de crear un formulario con el fin de mostrar los atletas inscritos-->
 @extends('adminMasterPage')
 @section('adminContent')
-
+<section>
+      <div class="row">
 <div class="col-md-12 col-md-offset-0 text-center">
     
-    @if (Session::has('delegate'))
+    @if (Session::has('errorI'))
              <div align = "center">
              <div class="alert alert-success">
              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-             {{Session::get('delegate')}}</div></div>
+             {{Session::get('errorI')}}</div></div>
             @endif
             
             
@@ -115,4 +116,6 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
 </div>
 </div>
 </div>
+</div>
+</section>
 @endsection

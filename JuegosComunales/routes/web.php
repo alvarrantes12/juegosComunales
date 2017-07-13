@@ -166,6 +166,7 @@ Route::get('/upAthlete', 'personController@editAthlete');
 Route::post('/saveData', 'personController@saveData');
 
 Route::get('/editAthlete/{IDPerson}', 'personController@eAthlete');
+Route::post('/editDel', 'personController@editDA');
 Route::post('/editA', 'personController@editA');
 
 
@@ -185,6 +186,7 @@ Route::post('/editAdminS', 'personController@editAdministrador');
 
 Route::get('/editPerfil/', 'personController@editPerfil');
 Route::post('/editPe', 'personController@editPerfill');
+
 
 //Rutas personal de Apoyo delegado
 Route::get('/showExtraDel', 'personController@showExtraDel');
@@ -215,4 +217,3 @@ Route::get ('/excelUpload', 'excelController@indexDelegate');
 Route::post ('/saveExcelD', 'excelController@save');
 Route::get ('/excelDataRead', 'excelController@readExcel');
 Route::get ('/showExcelDataD', 'excelController@showFile');
-

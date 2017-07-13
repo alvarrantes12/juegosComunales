@@ -8,13 +8,14 @@
     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
     <li data-target="#myCarousel" data-slide-to="1"></li>
     <li data-target="#myCarousel" data-slide-to="2"></li>
+    <li data-target="#myCarousel" data-slide-to="3"></li>
    
   </ol>
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner ">
      <div class="item active">
-     <img src="/dist/img/sport-1201014_1280.jpg" alt="Bienvenid@">
+     <img src="/dist/img/motion-1500x1000.jpg" alt="Bienvenid@">
       <div class="carousel-caption">
         <h3>Bienvenid@</h3>
         <p>Sistema de Inscripción para Juegos Comunales</p>
@@ -22,15 +23,23 @@
     </div>
     
     <div class="item">
-        <a  href="{{URL::to('newCo/')}}"><img src="/dist/img/sport-1201014_1280.jpg" alt="Inscribir"></a>
+        <a  href="{{URL::to('showAthletes/')}}"><img src="/dist/img/soccer-570836_1280.jpg" alt="Inscribir"></a>
       <div class="carousel-caption">
-        <h3>Inscribir</h3>
-        <p>Inscribir Representantes de las comunidades</p>
+        <h3>Atletas</h3>
+        <p>Lista de atletas inscritos</p>
+      </div>
+    </div>
+    
+    <div class="item">
+        <a  href="{{URL::to('showExtraDel/')}}"><img src="/dist/img/karate.jpg" alt="Personal de Apoyo"></a>
+      <div class="carousel-caption">
+        <h3>Personal de Apoyo</h3>
+        <p>Lista de personal inscrito</p>
       </div>
     </div>
 
     <div class="item">
-      <img src="/dist/img/sport-1201014_1280.jpg" alt="Reportes">
+      <a  href="{{URL::to('reportDel/')}}"><img src="/dist/img/1300x600_fit_Bike-und-_Mountainbike-im-_Gasteinert.jpg" alt="Reportes"></a>
       <div class="carousel-caption">
         <h3>Reportes</h3>
         <p>Generar reportes de los Juegos Comunales</p>

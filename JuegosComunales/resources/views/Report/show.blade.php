@@ -16,11 +16,12 @@ Vista que se encarga de crear un formulario con el fin crear un nuevo canton en 
 <section>
       <div class="row">
 <div class="col-md-10 col-md-offset-1 text-center">
-            <div class="panel panel-info">
+           <div class="panel panel-success">
                <div class="panel-heading">
-                 <h4 style="color: #899B82;">Reportes</h4>
+                  <h4 style="color: #899B82;">Reporte de atletas por categoría</h4>
                </div>
                <div class="panel-body">
+  
 
     <form class="form-horizontal" role="form" method="POST" target="_blank" action="{{ url('generatePDF/') }}">
       
@@ -44,7 +45,7 @@ Vista que se encarga de crear un formulario con el fin crear un nuevo canton en 
                         @endforeach
                    </select>
             </div>
-                     <label for="" class="col-lg-4 control-label">Seleccione la comunidad:</label> 
+                     <label for="" class="col-lg-4 control-label">Seleccione la comunidad</label> 
                 <div class="col-lg-6 category">
                     <select class="form-control" id = "community" name = "community" required autofocus>
                         <option value="" selected>Debe seleccionar un distrito primero</option>
@@ -60,7 +61,7 @@ Vista que se encarga de crear un formulario con el fin crear un nuevo canton en 
                         @endforeach
                    </select>
             </div>
-                     <label for="" class="col-lg-4 control-label">Seleccione la categoría:</label> 
+                     <label for="" class="col-lg-4 control-label">Seleccione la categoría</label> 
                 <div class="col-lg-6 category">
                     <select class="form-control" id = "category" name = "category" required autofocus>
                         <option value="" selected>Debe seleccionar un deporte primero</option>
@@ -70,7 +71,7 @@ Vista que se encarga de crear un formulario con el fin crear un nuevo canton en 
         </div>
         
             <div class="col-lg-offset-8 col-lg-4">
-              <button type="button" class="btn btn-info"><span class="glyphicon"> </span><span>Cancelar</span></button>
+            <br>
                <button type="submit" class="btn btn-info"><span class="glyphicon"> </span><span>Exportar PDF</span></button>
             </div>
       

@@ -35,7 +35,7 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
             <form class="form-horizontal" role="form" method="POST" action="{{url('searchPerson/')}}">
                {{ csrf_field() }}
                <div class="col-md-9">
-                  <input id="filter" placeholder='Digite la cedula del atleta, el nombre o apellido' type="text" class="form-control" name="filter" value="{{ old('filter') }}" required autofocus>
+                  <input id="filter" placeholder='Digite la cédula del atleta, el nombre o apellido' type="text" class="form-control" name="filter" value="{{ old('filter') }}" required autofocus>
                   @if ($errors->has('filter'))
                   <span class="help-block">
                   <strong>{{$errors->first('filter')}}</strong>
@@ -61,15 +61,15 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
    <div class="table-responsive text-center">
       <table class="table table-hover table-striped text-center">
          <thead>
-            <th>Numero de identificación</th>
+            <th>Número de identificación</th>
             <th>Nombre del atleta</th>
             <th>Primer Apellido</th>
             <th>Segundo Apellido</th>
             <th>Fecha de nacimiento</th>
             <th>Comunidad</th>
             <th>Deporte</th>
-            <th>Categoria</th>
-           
+            <th>Categoría</th>
+            <th>Foto</th>
          <th></th>
             <th></th>
          </thead>
@@ -79,8 +79,9 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
             </div>
                @endif
          @foreach ($person as $p)
-         
+          
          <tr>
+            
             <td>{{$p->IDPerson}}</td>
             <td>{{$p->name}}</td>
             <td>{{$p->lastName1}}</td>
@@ -90,8 +91,13 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
              <td>{{$p->nameCommunity}}</td>
               <td>{{$p->nameSport}}</td>
                <td>{{$p->nameCategory}}</td>
-               
-        <td>
+               @if($p->imgPasaport != null)
+               <td><img src="data:image/jpeg;base64,{{base64_encode(Storage::disk('photos')->get($p->imgPasaport))}}" style= "height:70px;width:70px;"></td>
+               @else
+               <td>-----</td>
+               @endif
+               <td>
+              
                <a href="{{URL::to('editAthlete/' . $p->IDPerson)}}">
                   <i class="fa fa-pencil-square-o"></i> <span>Editar</span>
                  

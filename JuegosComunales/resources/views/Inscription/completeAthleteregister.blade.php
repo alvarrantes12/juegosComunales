@@ -14,8 +14,7 @@ Vista que se encarga de crear un formulario con el fin de seleccionar el deporte
 específicos con el fin de recolectar parte de los datos de la inscripción de los participantes en el sistema-->
 @extends('masterPage')
 @section('content')
-<section>
-      <div class="row">
+
 <div class="form-group">
 <div class="container-fluid">
     <div class="container">
@@ -34,7 +33,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
   </div>
   <div class="panel-body">
       
-  <form class="form-horizontal" role="form" method='POST' id="newPS" name="newPS" action="{{ url('insertCompleteAthlete/') }}">
+  <form class="form-horizontal" role="form" method='POST' id="newPS" name="newPS" action="{{ url('insertCompleteAthlete/') }}" enctype="multipart/form-data">
   {{ csrf_field() }} 
                  
  <div  >
@@ -89,7 +88,9 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
       <select  class="form-control" id = "sport" name = "sport" required autofocus>
                     <option value="0" selected>Seleccione un tipo de deporte...</option>
                         @foreach ($sport as $s)
+                        @if($s->active == 1)
                             <option  value ='{{$s->IDSport}}'>{{$s->nameSport}}</option>
+                       @endif
                         @endforeach
                    </select>
                 </div>
@@ -128,7 +129,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         </div>
         
     <div class="col-md-4">
-    <input type="file" id="archivo1">
+    <input type="file" id="f1" name ="f1">
         </div>
     </section>
     
@@ -138,7 +139,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         </div>
         
     <div class="col-md-4">
-    <input type="file" id="archivo2">
+    <input type="file" id="f2" name ="f2">
         </div>
     </section>
     
@@ -148,19 +149,11 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
         </div>
         
     <div class="col-md-4">
-    <input type="file" id="archivo3">
+    <input type="file" id="f3" name ="f3">
         </div>
     </section>
      
-     <section class="col-md-12">
-    <div class="col-md-3">
-        <label for="adj">Boleta de inscripcion (pdf)</label>
-        </div>
-        
-    <div class="col-md-4">
-    <input type="file" id="archivo4">
-        </div>
-    </section>
+     
     
   </div>
 </div>
@@ -176,8 +169,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 </div>
 </form>
 </div>
-</div>
-</section>
+
 @endsection
 
 
@@ -189,10 +181,12 @@ $(document).ready(function() {
     $("#sport").change(function() {
         	$("#category ").empty();
 	$.getJSON(('getCategory/')+$("#sport").val(),function(data){
-	     $("#category").append('<option value="0">Seleccione una categoría</option>');
+	     $("#category").append('<option value="">Seleccione una categoría</option>');
 	    $.each(data, function(id,item){
+	        if(item.active == 1){
 		    $("#category").append('<option value="'+item.IDCategory+'">'+item.nameCategory+'</option>');
-	    });
+	   }
+	   });
 	});
 	
     });
@@ -209,7 +203,7 @@ $(document).ready(function() {
         	$("#label").hide();
         
 	$.getJSON(('getTest/')+$("#category").val(),function(data){
-	     $("#test").append('<option value="0">Seleccione una prueba</option>');
+	     $("#test").append('<option value="">Seleccione una prueba</option>');
 	     
 
 	    $.each(data, function(id,item){
