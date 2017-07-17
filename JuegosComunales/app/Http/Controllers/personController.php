@@ -535,24 +535,26 @@ class personController extends Controller
             ->with('person', $all);
        
     }
-    public function delete(Request $request, $IDPerson){
+    public function delete(Request $request, $IDPerson, $imgPasaport){
       personEdition::where('IDPerson' , $IDPerson)->delete();
-       personTest::where('IDPerson' , $IDPerson)->delete();
-      athleteCategory::where('IDPerson' , $IDPerson)->delete();
-      athlete::where('IDPerson' , $IDPerson)->delete();
-       AthleteImg::where('IDPerson' , $IDPerson)->delete();
-      person::where('IDPerson' , $IDPerson)->delete();
-      
-     return $this-> index(); 
-}
-
-public function deleteByDelegate (Request $request, $IDPerson){
-      personEdition::where('IDPerson' , $IDPerson)->delete();
-       personTest::where('IDPerson' , $IDPerson)->delete();
+      personTest::where('IDPerson' , $IDPerson)->delete();
       athleteCategory::where('IDPerson' , $IDPerson)->delete();
       athlete::where('IDPerson' , $IDPerson)->delete();
       AthleteImg::where('IDPerson' , $IDPerson)->delete();
       person::where('IDPerson' , $IDPerson)->delete();
+      Storage::disk('photos')->delete($imgPasaport);
+      
+     return $this-> index(); 
+}
+
+public function deleteByDelegate (Request $request, $IDPerson, $imgPasaport){
+      personEdition::where('IDPerson' , $IDPerson)->delete();
+      personTest::where('IDPerson' , $IDPerson)->delete();
+      athleteCategory::where('IDPerson' , $IDPerson)->delete();
+      athlete::where('IDPerson' , $IDPerson)->delete();
+      AthleteImg::where('IDPerson' , $IDPerson)->delete();
+      person::where('IDPerson' , $IDPerson)->delete();
+      Storage::disk('photos')->delete($imgPasaport);
      return $this-> indexDelegate(); 
 }
 

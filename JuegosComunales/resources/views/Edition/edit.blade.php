@@ -41,7 +41,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
     <label for="" class="col-lg-4 control-label">Año de la Edición</label>
     <div class="col-lg-6">
         <div class='input-group date' id='year'>
-            <input pattern="^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$" title="La fecha debe ser año-mes-dia" value= "{{$eEdition->year}}" name = "year" type='text' class="form-control" id='datepicker' autocomplete='off' onchange="changeEventHandler(event);"/>
+            <input pattern="^\d{4}$" title="Debe ser ingresado solo el año" value= "{{$eEdition->year}}" name = "year" type='text' class="form-control" id='datepicker' autocomplete='off' onchange="changeEventHandler(event);"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>

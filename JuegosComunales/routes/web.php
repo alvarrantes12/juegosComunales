@@ -145,7 +145,8 @@ Route::post('/insertCompleteRegister','personController@insertPersonByDelegate')
 Route::post('/insertCompleteAthlete','personController@insertByAthleteDelegate');
 Route::get('/editAthleteD/{IDPerson}', 'personController@editAthleteByDelegate');
 Route::post('/updateAthlete', 'personController@updateAthlete');
-Route::get('/deleteAthleteD/{IDPerson}', 'personController@deleteByDelegate');
+Route::get('/deleteAthleteD/{IDPerson}/{imgPasaport}', 'personController@deleteByDelegate');
+
 
 // Rutas que se encargan del IMEC de Participantes.
 Route::get('/showP', 'personController@index');
@@ -161,7 +162,7 @@ Route::post('/insertDoc','personController@insertDoc');
 Route::post('/searchPerson', 'personController@search');
 Route::post('/filterPerson', 'personController@searchFilter');
 
-Route::get('/deleteAthlete/{IDPerson}', 'personController@delete');
+Route::get('/deleteAthlete/{IDPerson}/{imgPasaport}', 'personController@delete');
 Route::get('/upAthlete', 'personController@editAthlete');
 Route::post('/saveData', 'personController@saveData');
 

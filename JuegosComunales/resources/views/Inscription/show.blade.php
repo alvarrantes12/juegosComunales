@@ -103,7 +103,7 @@ Vista que se encarga de crear un formulario con el fin de mostrar los atletas in
              </a>
             </td>
              <td>
-                 <a href="{{URL::to('deleteAthleteD/'.$p->IDPerson)}}">
+                 <a href="{{URL::to('deleteAthleteD/'.$p->IDPerson. '/' .$p->imgPasaport)}}">
                        <i class="fa fa-trash-o"></i><span> Eliminar</span>
                   </a>
               </td>

@@ -15,12 +15,7 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
 @extends('masterPage')
 @section('content')
  <section>
-     @if (Session::has('person'))
-             <div align = "center">
-             <div class="alert alert-danger">
-             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-             {{Session::get('person')}}</div></div>
-            @endif
+  
       <div class="row">
         
          <div class="col-md-7 col-md-offset-2 text-center">
@@ -100,20 +95,20 @@ específicos con el fin de recolectar parte de los datos de la inscripción de l
                      <label for="" class="col-lg-4 control-label">Correo electrónico</label>
                      <div class="col-lg-6">
                         <input type="email" class="form-control" name="email" id="email"
-                           placeholder="xxx@yyy.zzz"  required autofocus>
+                           placeholder="xxx@yyy.zzz"  >
                      </div>
                   </div>
                   
                    <div  >
                      <label for="" class="col-lg-4 control-label">Número Telefónico</label>
                      <div class="col-lg-6">
-                        <input type="text"  class="form-control" name="telephone" id="telephone" pattern="^[0-9]{1}[\-][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}" title="Formato incorrecto, Solo 8 digitos son permitidos y con el formato 2-345-67-89" placeholder="2-494-01-02"  required autofocus>
+                        <input type="text"  class="form-control" name="telephone" id="telephone" pattern="^[0-9]{1}[\-][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}" title="Formato incorrecto, Solo 8 digitos son permitidos y con el formato 2-345-67-89" placeholder="2-494-01-02" >
                      </div>
                   </div>
                    <div  >
                      <label for="" class="col-lg-4 control-label">Dirección</label>
                      <div class="col-lg-6">
-                        <textarea type="text" style="resize: none;" class="form-control" rows="5" id="address" name = "address"></textarea>
+                        <textarea type="text" style="resize: none;" class="form-control" rows="5" id="address" name = "address" required autofocus></textarea>
                      </div>
                   </div>
                 
